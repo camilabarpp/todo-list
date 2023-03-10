@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {delay, map, Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 import {TaskModel} from "./task-model";
-import {ApiResponse} from "./api-response";
+import {TaskRequest} from "./task-request";
 
 @Injectable({
   providedIn: 'root'
@@ -15,16 +15,26 @@ export class TaskService {
   }
 
   getTasks(): Observable<TaskModel[]> {
-    return this.httpClient
-      .get(this.API)
-      .pipe(
-        map((res: ApiResponse) =>
-          res.results.map((person, index) => ({...person, id: index}))
-        )
-      );
+    return this.httpClient.get<TaskModel[]>(this.API);
   }
 
-  saveTask(id: number, person: TaskModel) {
-    return of(person).pipe(delay(Math.random() * 2000));
+  getTaskById(id: number): Observable<TaskModel> {
+    return this.httpClient.get<TaskModel>(`${this.API}/${id}`);
+  }
+
+  createTask(task: TaskRequest): Observable<TaskModel> {
+    return this.httpClient.post<TaskModel>(this.API, task);
+  }
+
+  updateTask(id: number, task: TaskRequest): Observable<TaskModel> {
+    return this.httpClient.put<TaskModel>(`${this.API}/${id}`, task);
+  }
+
+  deleteTask(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.API}/${id}`);
+  }
+
+  deleteAllTasks(): Observable<void> {
+    return this.httpClient.delete<void>(`${this.API}`);
   }
 }

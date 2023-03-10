@@ -1,7 +1,5 @@
 import {Component} from '@angular/core';
-import {TaskService} from "./service/task.service";
-import {catchError, Observable, of} from "rxjs";
-import {TaskModel} from "./service/task-model";
+import {TaskStore} from "./store/task-store";
 
 
 @Component({
@@ -10,22 +8,13 @@ import {TaskModel} from "./service/task-model";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  tasks$ = this.taskStore.task$;
 
+  constructor(private taskStore: TaskStore) {
+    this.taskStore.loadTask();
 
-  tasks$: Observable<TaskModel[]> | null = null;
-
-  constructor(private taskService: TaskService) {
-    this.refresh();
-  }
-
-  refresh() {
-    this.tasks$ = this.taskService.getTasks()
-      .pipe(
-        catchError(error => {
-          // this.onError('Erro ao carregar cursos.');
-          return of([])
-        })
-      );
-    console.log(this.tasks$.subscribe((data) => console.log(data)));
+    this.tasks$.subscribe(
+      a => console.log(a)
+    )
   }
 }
