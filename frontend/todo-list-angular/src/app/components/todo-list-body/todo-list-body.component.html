@@ -13,4 +13,17 @@
 
 <!--<app-todo-add-itens (emitItemTaskList)="setEmitTaskList($event)"></app-todo-add-itens>-->
 <!--<app-todo-button-delete *ngIf="taskList.length" (click)="deleteAllTaskList()"></app-todo-button-delete>-->
-<app-todo-button-delete></app-todo-button-delete>
+<section>
+  <ul *ngIf="tasks$ | async as tasks">
+    <li *ngFor="let task of tasks">
+      <p>{{task.name}}</p>
+      <p>{{task.description}}</p>
+    </li>
+  </ul>
+</section>
+
+<div class="button">
+  <app-todo-add-itens></app-todo-add-itens>
+
+  <app-todo-button-delete></app-todo-button-delete>
+</div>

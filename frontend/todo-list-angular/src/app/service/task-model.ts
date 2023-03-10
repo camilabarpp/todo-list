@@ -1,6 +1,6 @@
 export interface TaskModel {
   id: number;
-  title: string;
+  name: string;
   description: string;
   completed: boolean;
   weekDay: string;
