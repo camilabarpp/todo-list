@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {first} from "rxjs";
+import {delay, map, Observable, of} from "rxjs";
 import {TaskModel} from "./task-model";
+import {ApiResponse} from "./api-response";
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +11,20 @@ export class TaskService {
 
   private readonly API = 'api/v1/tasks';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+  }
 
-  list() {
-    return this.httpClient.get<TaskModel[]>(this.API)
+  getTasks(): Observable<TaskModel[]> {
+    return this.httpClient
+      .get(this.API)
       .pipe(
-        first(),
-        //delay(5000),
-        // tap(courses => console.log(courses))
+        map((res: ApiResponse) =>
+          res.results.map((person, index) => ({...person, id: index}))
+        )
       );
+  }
+
+  saveTask(id: number, person: TaskModel) {
+    return of(person).pipe(delay(Math.random() * 2000));
   }
 }

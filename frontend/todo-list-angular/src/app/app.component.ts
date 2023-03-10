@@ -19,7 +19,7 @@ export class AppComponent {
   }
 
   refresh() {
-    this.tasks$ = this.taskService.list()
+    this.tasks$ = this.taskService.getTasks()
       .pipe(
         catchError(error => {
           // this.onError('Erro ao carregar cursos.');
