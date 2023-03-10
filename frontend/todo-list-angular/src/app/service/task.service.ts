@@ -30,8 +30,8 @@ export class TaskService {
     return this.httpClient.put<TaskModel>(`${this.API}/${id}`, task);
   }
 
-  deleteTask(id: number): Observable<void> {
-    return this.httpClient.delete<void>(`${this.API}/${id}`);
+  deleteTask(id: number): Observable<number> {
+    return this.httpClient.delete<number>(`${this.API}/${id}`);
   }
 
   deleteAllTasks(): Observable<void> {

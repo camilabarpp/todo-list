@@ -3,14 +3,15 @@ import {Injectable} from "@angular/core";
 import {ComponentStore} from '@ngrx/component-store';
 import {Subscription, switchMap, tap} from "rxjs";
 import {TaskService} from "../service/task.service";
+import {TaskRequest} from "../service/task-request";
 
 export interface TaskState {
-  task?: TaskModel[];
+  tasks: TaskModel[];
   selectedTaskId?: number;
 }
 
 const initialState: TaskState = {
-  task : [],
+  tasks: [],
   selectedTaskId: undefined,
 }
 
@@ -24,22 +25,61 @@ export class TaskStore extends ComponentStore<TaskState> {
     super(initialState);
   }
 
-  readonly task$ = this.select((state) => state.task);
+  readonly tasks$ = this.select((state) => state.tasks);
 
-  // readonly taskTitle$ = this.select((state) => state.task?.title);
-  //
-  // readonly taskCompleted$ = this.select((state) => state.task?.completed);
+  readonly selectedTask$ = this.select((state) => {
+    const selectedTask = state.tasks?.find((task) => task.id === state.selectedTaskId);
+    return selectedTask ?? null;
+  });
 
-  readonly loadTask = this.effect<void>((trigger$) =>
+  readonly loadTasks = this.effect<void>((trigger$) =>
     trigger$.pipe(
       switchMap(() => this._taskService.getTasks()),
-      tap((task) => this.patchState({task})),
+      tap((tasks) => this.patchState({tasks})),
     ),
   );
 
-  readonly clearTask = this.effect<void>((trigger$) =>
-    trigger$.pipe(
-      tap(() => this.patchState({task: undefined})),
+  readonly createTask = this.effect<TaskRequest>((task$) =>
+    task$.pipe(
+      switchMap((task) => this._taskService.createTask(task)),
+      tap((createdTask) =>
+        this.patchState((state) => ({
+          tasks: [...state.tasks, createdTask],
+        })),
+      ),
     ),
   );
+
+  readonly updateTask = this.effect<{ id: number; task: TaskRequest }>((payload$) =>
+    payload$.pipe(
+      switchMap(({id, task}) => this._taskService.updateTask(id, task)),
+      tap((updatedTask) =>
+        this.patchState((state) => ({
+          tasks: state.tasks?.map((task) => (task.id === updatedTask.id ? updatedTask : task)),
+        })),
+      ),
+    ),
+  );
+
+  readonly deleteTask = this.effect<number>((id$) =>
+    id$.pipe(
+      switchMap((id) => this._taskService.deleteTask(id)),
+      tap((deletedId) =>
+        this.patchState((state) => ({
+          tasks: state.tasks ? state.tasks.filter((task) => task.id !== deletedId) : []
+        })),
+      ),
+    ),
+  );
+
+  readonly deleteAllTasks = this.effect<void>((trigger$) =>
+    trigger$.pipe(
+      switchMap(() => this._taskService.deleteAllTasks()),
+      tap(() => this.patchState({tasks: []})),
+    ),
+  );
+
+  setSelectedTaskId(id: number) {
+    this.patchState({selectedTaskId: id});
+  }
 }

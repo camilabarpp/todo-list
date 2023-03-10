@@ -8,10 +8,10 @@ import {TaskStore} from "./store/task-store";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  tasks$ = this.taskStore.task$;
+  tasks$ = this.taskStore.tasks$;
 
   constructor(private taskStore: TaskStore) {
-    this.taskStore.loadTask();
+    this.taskStore.loadTasks();
 
     this.tasks$.subscribe(
       a => console.log(a)
