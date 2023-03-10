@@ -5,11 +5,15 @@ import {SharedModule} from "../shared/shared.module";
 import {MaterialModule} from "../material/material.module";
 import {TodoListRoutingModule} from "./todo-list-routing.module";
 import {TodoListBodyComponent} from "./todo-list-body/todo-list-body.component";
+import { TodoAddItensComponent } from './todo-add-itens/todo-add-itens.component';
+import { TodoButtonDeleteComponent } from './todo-button-delete/todo-button-delete.component';
 
 @NgModule({
   declarations: [
     TodoListComponent,
-    TodoListBodyComponent
+    TodoListBodyComponent,
+    TodoAddItensComponent,
+    TodoButtonDeleteComponent
   ],
   imports: [
     CommonModule,

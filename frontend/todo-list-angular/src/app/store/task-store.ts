@@ -35,7 +35,10 @@ export class TaskStore extends ComponentStore<TaskState> {
   readonly loadTasks = this.effect<void>((trigger$) =>
     trigger$.pipe(
       switchMap(() => this._taskService.getTasks()),
-      tap((tasks) => this.patchState({tasks})),
+      tap((tasks) => {
+        this.patchState({tasks}),
+          console.log(tasks)
+      }),
     ),
   );
 
