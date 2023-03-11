@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {NonNullableFormBuilder, Validators} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 import {TaskStore} from "../../store/task-store";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {TaskModel} from "../../service/task-model";
-import {TaskRequest} from "../../service/task-request";
+import {TaskService} from "../../service/task.service";
 
 @Component({
   selector: 'app-todo-form',
@@ -15,68 +14,53 @@ export class TodoFormComponent implements OnInit {
 
   tasks$ = this.taskStore.tasks$;
 
-  taskId?: number;
-
-  taskForm = this.fb.group({
-    id: [0],
-    name: ['', [Validators.required]],
-    description: [''],
-    completed: [false],
-    weekDay: ['', [Validators.required]]
-  });
-
-
   constructor(
     private taskStore: TaskStore,
+    private service: TaskService,
     private snackBar: MatSnackBar,
     private router: Router,
-    private fb: NonNullableFormBuilder,
+    private fb: FormBuilder,
     private route: ActivatedRoute,
   ) {
     this.taskStore.loadTasks();
   }
 
-  // ngOnInit() {
-  //   this.taskStore.tasks$.subscribe(
-  //     task => {
-  //       this.taskForm.setValue({
-  //         name: task[0].name,
-  //         completed: task[0].completed,
-  //         description: task[0].description,
-  //         id: task[0].id,
-  //         weekDay: task[0].weekDay
-  //       })
-  //     }
-  //   )
-  // }
+  form = this.fb.group({
+    id: 0,
+    name: ['', [Validators.required,
+      Validators.minLength(5),
+      Validators.maxLength(100)]],
+    description: [''],
+    weekDay: ['', [Validators.required]],
+  });
 
-  ngOnInit() {
-    this.taskId = this.route.snapshot.params['id'];
+  ngOnInit(): void {
+    const id: number = this.route.snapshot.params['id'];
+    if(id){
+      this.service.getTaskById(id).subscribe(
+        taskDetail => {
+          console.log(taskDetail)
+          this.form.setValue({
+              id: taskDetail.id,
+              name: taskDetail.name,
+              description: taskDetail.description,
+              weekDay: taskDetail.weekDay
+            }
+          );
+        },
+      )
+    }
 
-    console.log(this.taskId)
   }
 
 
   onSubmit() {
-    if (this.taskForm.valid) {
-      const task: { weekDay: string; name: string; description: string | undefined; completed: boolean } = {
-        name: this.taskForm.get('name')!.value,
-        description: this.taskForm.get('description')?.value,
-        completed: false,
-        weekDay: this.taskForm.get('weekDay')!.value,
-      };
-
-      this.taskStore.createTask(task);
-      this.onSuccess();
-      this.onCancel();
-    }
+    this.service.createTask(this.form.value)
+      .subscribe(result => this.onSuccess(), error => this.onError());
   }
 
-  getErrorMessage(fieldName
-                    :
-                    string
-  ) {
-    const field = this.taskForm.get(fieldName);
+  getErrorMessage(fieldName: string) {
+    const field = this.form?.get(fieldName);
 
     if (field?.hasError('required')) {
       return 'Campo obrigatório';
@@ -100,4 +84,6 @@ export class TodoFormComponent implements OnInit {
   onCancel() {
     this.router.navigate(['../../'], {relativeTo: this.route});
   }
+
+
 }

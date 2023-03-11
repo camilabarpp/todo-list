@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {first, Observable} from "rxjs";
 import {TaskModel} from "./task-model";
 import {TaskRequest} from "./task-request";
 
@@ -22,8 +22,8 @@ export class TaskService {
     return this.httpClient.get<TaskModel>(`${this.API}/${id}`);
   }
 
-  createTask(task: TaskRequest): Observable<TaskModel> {
-    return this.httpClient.post<TaskModel>(this.API, task);
+  createTask(record: any) {
+    return this.httpClient.post<TaskModel>(this.API, record).pipe(first());
   }
 
   updateTask(id: number, task: TaskRequest): Observable<TaskModel> {

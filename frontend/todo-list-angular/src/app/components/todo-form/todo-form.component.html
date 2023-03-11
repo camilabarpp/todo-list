@@ -29,19 +29,16 @@
 <!--  </ul>-->
 <!--</section>-->
 
-<form [formGroup]="taskForm!" class="form"  *ngIf="tasks$ | async as tasks">
+<form [formGroup]="form" class="form"  *ngIf="tasks$ | async as tasks">
   <mat-form-field appearance="outline">
     <mat-label>Digite uma tarefa</mat-label>
     <input matInput placeholder="Ler um livro" formControlName="name" required>
-    <mat-error *ngIf="taskForm?.invalid">{{getErrorMessage('name')}}</mat-error>
+    <mat-error *ngIf="form.invalid">{{getErrorMessage('name')}}</mat-error>
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Digite uma descrição</mat-label>
     <input matInput placeholder="Ler 10 páginas por dia" formControlName="description">
   </mat-form-field>
-
-  <p >{{tasks[0].id}}</p>
-
   <mat-form-field appearance="outline">
     <mat-label>Dia da Semana:</mat-label>
     <mat-select formControlName="weekDay">
