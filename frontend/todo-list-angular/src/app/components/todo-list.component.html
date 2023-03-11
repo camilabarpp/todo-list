@@ -1,6 +1,7 @@
 <div *ngIf="tasks$ | async as tasks, else loading">
   <app-todo-list
     [tasks]="tasks"
+    [selected]="onSelected(false)"
     (add)="onAdd()"
     (edit)="onEdit($event)"
     (remove)="onRemove($event)"

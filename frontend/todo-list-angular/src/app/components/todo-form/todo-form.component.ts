@@ -13,6 +13,7 @@ import {TaskService} from "../../service/task.service";
 export class TodoFormComponent implements OnInit {
 
   tasks$ = this.taskStore.tasks$;
+  taskId? : number;
 
   constructor(
     private taskStore: TaskStore,
@@ -42,7 +43,8 @@ export class TodoFormComponent implements OnInit {
       this.service.getTaskById(id).subscribe(
         taskDetail => {
           this.taskStore.updateTask({id: id, task: taskDetail});
-          console.log(taskDetail)
+          this.taskId = taskDetail.id;
+          console.log(this.taskId)
           this.form.setValue({
               id: taskDetail.id,
               name: taskDetail.name,
@@ -59,21 +61,26 @@ export class TodoFormComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      const task : any = {
+      const task: any = {
         id: this.form.get('id')!.value,
         name: this.form.get('name')!.value,
         description: this.form.get('description')?.value,
+        completed: false, // Adicionado aqui
         weekDay: this.form.get('weekDay')!.value,
       }
 
       if (this.form.value.id) {
-        this.taskStore.updateTask({ task: task, id: task.id });
+        this.taskStore.updateTask({task: task, id: task.id});
+        console.log(task.name)
+        console.log(task.id)
       } else {
         this.taskStore.createTask(task);
+        console.log('criando')
       }
-
       this.onSuccess();
       this.onCancel();
+    } else {
+      this.onError();
     }
   }
 
@@ -102,6 +109,4 @@ export class TodoFormComponent implements OnInit {
   onCancel() {
     this.router.navigate(['../../'], {relativeTo: this.route});
   }
-
-
 }

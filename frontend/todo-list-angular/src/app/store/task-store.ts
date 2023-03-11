@@ -93,6 +93,20 @@ export class TaskStore extends ComponentStore<TaskState> {
     ),
   );
 
+  readonly updateTaskStatus = this.effect<{ id: number; completed: boolean }>((payload$) =>
+    payload$.pipe(
+      switchMap(({ id, completed }) => {
+        const update = { completed }; // cria objeto com a propriedade "completed"
+        return this._taskService.updateTaskStatus(id, update); // envia objeto no corpo da requisição
+      }),
+      tap((updatedTask) =>
+        this.patchState((state) => ({
+          tasks: state.tasks?.map((task) => (task.id === updatedTask.id ? updatedTask : task)),
+        })),
+      ),
+    ),
+  );
+
   readonly deleteTask = this.effect<number>((id$) =>
     id$.pipe(
       switchMap((id) => this._taskService.deleteTask(id)),

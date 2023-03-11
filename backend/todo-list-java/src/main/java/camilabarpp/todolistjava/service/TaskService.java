@@ -38,7 +38,10 @@ public class TaskService {
         return entityToRespopnse(
                 taskRepository.findById(id)
                         .map(taskEntity -> {
+                            taskEntity.setName(taskRequest.getName());
+                            taskEntity.setDescription(taskRequest.getDescription());
                             taskEntity.setCompleted(taskRequest.getCompleted());
+                            taskEntity.setWeekDay(taskRequest.getWeekDay());
                             return taskRepository.save(taskEntity);
                         })
                         .orElseThrow(() -> new RuntimeException("Task not found" + id))

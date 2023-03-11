@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
@@ -40,8 +41,8 @@ public class TaskController {
     }
 
     @PatchMapping("/{id}")
-    public void updateCompleted(@PathVariable Long id, @RequestBody Boolean completed) {
-        taskService.updateCompleted(id, completed);
+    public void updateCompleted(@PathVariable Long id, @RequestBody Map<String, Boolean> completed) {
+        taskService.updateCompleted(id, completed.get("completed"));
     }
 
     @DeleteMapping("/{id}")

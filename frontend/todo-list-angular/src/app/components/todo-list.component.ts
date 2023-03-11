@@ -16,6 +16,7 @@ export class TodoListComponent {
   tasks$ = this.taskStore.tasks$;
 
   id!: number;
+  completed?: boolean = false;
 
   constructor(
     private taskStore: TaskStore,
@@ -37,6 +38,10 @@ export class TodoListComponent {
     });
   }
 
+  onSelected(selected : boolean) : boolean {
+    return this.completed = selected;
+  }
+
   onAdd() {
     this.router.navigate(['new'], {relativeTo: this.route});
   }
@@ -44,28 +49,6 @@ export class TodoListComponent {
   onEdit(taskId: number) {
     this.router.navigate(['edit', taskId], {relativeTo: this.route});
   }
-
-  // onRemove(course: TaskModel) {
-  //   const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-  //     data: 'Tem certeza que deseja remover esse curso?',
-  //   });
-  //
-  //   dialogRef.afterClosed().subscribe((result: boolean) => {
-  //     if (result) {
-  //       this.taskStore.deleteTask(course.id).subscribe(
-  //         () => {
-  //           this.refresh();
-  //           this.snackBar.open('Curso removido com sucesso!', 'X', {
-  //             duration: 5000,
-  //             verticalPosition: 'top',
-  //             horizontalPosition: 'center'
-  //           });
-  //         },
-  //         () => this.onError('Erro ao tentar remover curso.')
-  //       );
-  //     }
-  //   });
-  // }
 
   onRemove(course: TaskModel) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
@@ -75,11 +58,13 @@ export class TodoListComponent {
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
         this.taskStore.deleteTask(course.id);
+        this.snackBar.open('Curso removido com sucesso!', 'X', {
+          duration: 5000,
+          verticalPosition: 'bottom',
+          horizontalPosition: 'center'
+        });
         this.refresh();
-
       }
     });
-
-
   }
 }
