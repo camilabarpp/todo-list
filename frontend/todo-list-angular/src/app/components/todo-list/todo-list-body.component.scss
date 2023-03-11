@@ -1,0 +1,40 @@
+
+section {
+  width: 100%;
+  min-height: 400px;
+
+  background: #FFFFFF;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+
+  margin-top: 20px;
+
+  &.loading {
+    background-image: url("/assets/img/bg-task.svg");
+    background-repeat: no-repeat;
+    background-position: center 30px;
+  }
+
+  ul {
+    min-height: 200px;
+    padding: 20px 20px 100px 20px;
+
+    li {
+      display: flex;
+      align-items: center;
+
+      margin-bottom: 10px;
+
+      a {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    padding-bottom: 30px;
+  }
+}

@@ -1,0 +1,77 @@
+<!--<section [ngClass]="{'loading': !taskList.length}">-->
+<!--  <ul *ngIf="taskList.length">-->
+<!--    <li *ngFor="let item of taskList; let i = index">-->
+<!--      <input type="checkbox" [(ngModel)]="item.checked">-->
+<!--      <input type="text"(keyup)="validationInput(item.task, i)" [(ngModel)]="item.task" [ngClass]="{'checked': item.checked}">-->
+
+<!--      <button (click)="deleteItemTaskList(i)">-->
+<!--        <img src="../../../../../../../todo-list/frontend/todo-list-angular/src/assets/icon/Vector.svg" alt="">-->
+<!--      </button>-->
+<!--    </li>-->
+<!--  </ul>-->
+<!--</section>-->
+
+<!--<app-button-add-itens (emitItemTaskList)="setEmitTaskList($event)"></app-button-add-itens>-->
+<!--<app-button-button-delete *ngIf="taskList.length" (click)="deleteAllTaskList()"></app-button-button-delete>-->
+<!--<section>-->
+<!--  <ul *ngIf="tasks$ | async as tasks">-->
+<!--    <li *ngFor="let task of tasks">-->
+<!--      <div class="example-container">-->
+<!--        <mat-form-field appearance="outline">-->
+<!--          <mat-label>Enter your email</mat-label>-->
+<!--          <input matInput placeholder="pat@example.com" [formControl]="email" required>-->
+<!--          <mat-error *ngIf="tasks.invalid">{{getErrorMessage()}}</mat-error>-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <p>{{task.name}}</p>-->
+<!--      <p>{{task.description}}</p>-->
+<!--    </li>-->
+<!--  </ul>-->
+<!--</section>-->
+
+<form [formGroup]="taskForm!" class="form"  *ngIf="tasks$ | async as tasks">
+  <mat-form-field appearance="outline">
+    <mat-label>Digite uma tarefa</mat-label>
+    <input matInput placeholder="Ler um livro" formControlName="name" required>
+    <mat-error *ngIf="taskForm?.invalid">{{getErrorMessage('name')}}</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Digite uma descrição</mat-label>
+    <input matInput placeholder="Ler 10 páginas por dia" formControlName="description">
+  </mat-form-field>
+
+  <p >{{tasks[0].id}}</p>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Dia da Semana:</mat-label>
+    <mat-select formControlName="weekDay">
+      <mat-option [value]="'Segunda-feira'">
+        Segunda-feira
+      </mat-option>
+      <mat-option [value]="'Terça-feira'">
+        Terça-feira
+      </mat-option>
+      <mat-option [value]="'Quarta-feira'">
+        Quarta-feira
+      </mat-option>
+      <mat-option [value]="'Quinta-feira'">
+        Quinta-feira
+      </mat-option>
+      <mat-option [value]="'Sexta-feira'">
+        Sexta-feira
+      </mat-option>
+      <mat-option [value]="'Sábado'">
+        Sábado
+      </mat-option>
+      <mat-option [value]="'Domingo'">
+        Domingo
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="button">
+    <button class="button" color="warn" (click)="onCancel()" mat-raised-button>Cancelar</button>
+    <button class="button" color="primary" (click)="onSubmit()" mat-raised-button>Salvar</button>
+  </div>
+</form>
+

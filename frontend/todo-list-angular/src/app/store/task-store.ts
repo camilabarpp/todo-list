@@ -1,121 +1,103 @@
 import {TaskModel} from "../service/task-model";
-import {Injectable, OnDestroy} from "@angular/core";
+import {Injectable} from "@angular/core";
 import {ComponentStore} from '@ngrx/component-store';
-import {Observable, Subject, Subscription, switchMap, tap, withLatestFrom} from "rxjs";
+import {Subscription, switchMap, tap} from "rxjs";
 import {TaskService} from "../service/task.service";
+import {TaskRequest} from "../service/task-request";
 
 export interface TaskState {
-  task?: TaskModel[];
-  editorId: number | undefined;
-  editedTask: TaskModel | undefined;
+  tasks: TaskModel[];
+  selectedTaskId?: number;
 }
 
 const initialState: TaskState = {
-  task: [],
-  editorId: undefined,
-  editedTask: undefined
+  tasks: [],
+  selectedTaskId: undefined,
 }
 
 @Injectable()
-export class TaskStore extends ComponentStore<TaskState> implements OnDestroy {
-  private _saveEditTask$ = new Subject<void>();
+export class TaskStore extends ComponentStore<TaskState> {
   private _subs = new Subscription();
 
   constructor(
     private readonly _taskService: TaskService
   ) {
     super(initialState);
-
-    const saveWithData$ = this._saveEditTask$.pipe(
-      withLatestFrom(this.editedTask$, this.editorId$),
-      switchMap(([, task, taskId]) =>
-        this._taskService.saveTask(taskId, task)
-      )
-    );
-
-    this._subs.add(
-      saveWithData$.subscribe({
-        next: (task) => {
-          this.updateTask(task);
-
-          this.clearEditedTask();
-        },
-        error: (error) => {
-          console.error('An error happened while saving:', error);
-        }
-      })
-    );
   }
 
-  readonly task$ = this.select(({task}) => task);
-  readonly editorId$ = this.select(({editorId}) => editorId);
-  readonly editedTask$ = this.select(({editedTask}) => editedTask).pipe(
-    tap((task) => console.log('editedTask$', task)));
+  readonly tasks$ = this.select((state) => state.tasks);
 
-  readonly loadTask = this.updater((state, task: TaskModel[] | null) => ({
-    ...state,
-    task: task || [],
-  }));
+  readonly selectedTask$ = this.select((state) => {
+    const selectedTask = state.tasks?.find((task) => task.id === state.selectedTaskId);
+    return selectedTask ?? null;
+  });
 
-  readonly setEditorId = this.updater((state, editorId: number | undefined) => ({
-    ...state,
-    editorId,
-  }));
+  readonly loadTasks = this.effect<void>((trigger$) =>
+    trigger$.pipe(
+      switchMap(() => this._taskService.getTasks()),
+      tap((tasks) => {
+        this.patchState({tasks}),
+          console.log(tasks)
+      }),
+    ),
+  );
 
-  readonly setEditedTask = this.updater((state, editedTask: TaskModel | undefined) => ({
-    ...state,
-    editedTask,
-  }));
+  // readonly getTaskById = this.effect<{ id: number}>((payload$) =>
+  //   payload$.pipe(
+  //     switchMap(({id}) => this._taskService.getTaskById(id)),
+  //     tap((updatedTask) =>
+  //       this.patchState((state) => ({
+  //         tasks: state.tasks?.map((task) => (task.id === updatedTask.id ? updatedTask : task)),
+  //       })),
+  //     ),
+  //   ),
+  // );
 
-  readonly editTask = this.effect((taskId$: Observable<number | undefined>) =>
-    taskId$.pipe(
-      withLatestFrom(this.task$),
-      tap<[number | undefined, TaskModel[]]>(([taskId, task]) => {
-        this.setEditorId(taskId);
-
-        const taskToEdit =
-          !taskId || taskId == 0 ? undefined : task.find((task) => task.id == taskId);
-
-        this.setEditedTask(...taskToEdit);
-      })
-    ));
-
-  readonly updateTask = this.effect((task$: Observable<TaskModel>) =>
-    task$.pipe(
-      withLatestFrom(this.task$),
-      tap<[TaskModel, TaskModel[]]>(([task, tasks]) => {
-        const id = task.id;
-        const index = tasks.findIndex((cur) => {
-          console.log('compare', cur, id, cur.id === id);
-          return cur.id === id;
-        });
-
-        console.log('index', index, task, tasks);
-
-        if (index > -1) {
-          const editedPeople = [...tasks];
-          editedPeople[index] = task;
-
-          this.loadTask(editedPeople);
-        }
-      })
+  readonly getTaskById = this.effect<number>((id$) =>
+    id$.pipe(
+      switchMap((id) => this._taskService.getTaskById(id)),
+      // tap((task) => this.patchState({ selectedTask: task })),
     )
   );
 
-  ngOnDestroy() {
-    this._subs.unsubscribe();
-  }
 
-  cancelEditTask() {
-    this.clearEditedTask();
-  }
+  readonly createTask = this.effect<TaskRequest>((task$) =>
+    task$.pipe(
+      switchMap((task) => this._taskService.createTask(task)),
+      tap((createdTask) =>
+        this.patchState((state) => ({
+          tasks: [...state.tasks, createdTask],
+        })),
+      ),
+    ),
+  );
 
-  private clearEditedTask() {
-    this.setEditorId(undefined);
-    this.setEditedTask(undefined);
-  }
+  readonly updateTask = this.effect<{ id: number; task: TaskRequest }>((payload$) =>
+    payload$.pipe(
+      switchMap(({id, task}) => this._taskService.updateTask(id, task)),
+      tap((updatedTask) =>
+        this.patchState((state) => ({
+          tasks: state.tasks?.map((task) => (task.id === updatedTask.id ? updatedTask : task)),
+        })),
+      ),
+    ),
+  );
 
-  saveEditTask(value: TaskModel) {
-    this._saveEditTask$.next(value);
-  }
+  readonly deleteTask = this.effect<number>((id$) =>
+    id$.pipe(
+      switchMap((id) => this._taskService.deleteTask(id)),
+      tap((deletedId) =>
+        this.patchState((state) => ({
+          tasks: state.tasks ? state.tasks.filter((task) => task.id !== deletedId) : []
+        })),
+      ),
+    ),
+  );
+
+  readonly deleteAllTasks = this.effect<void>((trigger$) =>
+    trigger$.pipe(
+      switchMap(() => this._taskService.deleteAllTasks()),
+      tap(() => this.patchState({tasks: []})),
+    ),
+  );
 }

@@ -1,0 +1,24 @@
+<section [ngClass]="{'loading': !tasks.length}">
+  <ul *ngIf="tasks$ | async as tasks">
+    <li *ngFor="let task of tasks">
+      <mat-checkbox color="primary"></mat-checkbox>
+      <a (click)="onEdit(task.id)">{{task.name}}</a>
+    </li>
+
+  </ul>
+
+  <div class="button">
+    <button
+      mat-raised-button
+      color="primary"
+      aria-label="Adicionar uma tarefa"
+      (click)="onAdd()"
+      class="action-column-header"
+    >
+      <span>Adicionar tarefa</span>
+      <mat-icon>add</mat-icon>
+    </button>
+
+    <!--    <button class="button" color="primary" (click)="on()" mat-raised-button>Cancelar</button>-->
+  </div>
+</section>
