@@ -42,6 +42,25 @@ export class TaskStore extends ComponentStore<TaskState> {
     ),
   );
 
+  // readonly getTaskById = this.effect<{ id: number}>((payload$) =>
+  //   payload$.pipe(
+  //     switchMap(({id}) => this._taskService.getTaskById(id)),
+  //     tap((updatedTask) =>
+  //       this.patchState((state) => ({
+  //         tasks: state.tasks?.map((task) => (task.id === updatedTask.id ? updatedTask : task)),
+  //       })),
+  //     ),
+  //   ),
+  // );
+
+  readonly getTaskById = this.effect<number>((id$) =>
+    id$.pipe(
+      switchMap((id) => this._taskService.getTaskById(id)),
+      // tap((task) => this.patchState({ selectedTask: task })),
+    )
+  );
+
+
   readonly createTask = this.effect<TaskRequest>((task$) =>
     task$.pipe(
       switchMap((task) => this._taskService.createTask(task)),
@@ -81,8 +100,4 @@ export class TaskStore extends ComponentStore<TaskState> {
       tap(() => this.patchState({tasks: []})),
     ),
   );
-
-  setSelectedTaskId(id: number) {
-    this.patchState({selectedTaskId: id});
-  }
 }

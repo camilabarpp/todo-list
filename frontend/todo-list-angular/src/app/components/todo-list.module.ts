@@ -4,22 +4,22 @@ import {TodoListComponent} from './todo-list.component';
 import {SharedModule} from "../shared/shared.module";
 import {MaterialModule} from "../material/material.module";
 import {TodoListRoutingModule} from "./todo-list-routing.module";
-import {TodoListBodyComponent} from "./todo-list-body/todo-list-body.component";
-import { TodoAddItensComponent } from './todo-add-itens/todo-add-itens.component';
-import { TodoButtonDeleteComponent } from './todo-button-delete/todo-button-delete.component';
+import {TodoListBodyComponent} from "./todo-list/todo-list-body.component";
+import {ReactiveFormsModule} from "@angular/forms";
+import { TodoFormComponent } from './todo-form/todo-form.component';
 
 @NgModule({
   declarations: [
     TodoListComponent,
     TodoListBodyComponent,
-    TodoAddItensComponent,
-    TodoButtonDeleteComponent
+    TodoFormComponent,
   ],
   imports: [
     CommonModule,
     SharedModule,
     MaterialModule,
-    TodoListRoutingModule
+    TodoListRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class TodoListModule {

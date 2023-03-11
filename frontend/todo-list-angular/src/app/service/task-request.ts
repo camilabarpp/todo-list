@@ -1,5 +1,5 @@
 export interface TaskRequest {
-  title: string;
+  name: string;
   completed: boolean;
   weekDay: string;
 }
