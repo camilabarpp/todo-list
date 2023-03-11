@@ -30,7 +30,7 @@ export class TaskService {
   }
 
   updateTaskStatus(id: number, taskStatus: { completed: any }): Observable<TaskModel> {
-    return this.httpClient.put<TaskModel>(`${this.API}/${id}`, taskStatus);
+    return this.httpClient.patch<TaskModel>(`${this.API}/${id}`, taskStatus);
   }
 
   deleteTask(id: number): Observable<number> {

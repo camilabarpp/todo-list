@@ -11,8 +11,6 @@ import {Observable} from "rxjs";
 })
 export class TodoListBodyComponent {
   tasks$ = this.taskStore.tasks$;
-
-  teste?: Observable<TaskModel[]>;
   @Input() selected: boolean = false;
   @Input() tasks: TaskModel[] = [];
   @Output() add = new EventEmitter(false);
