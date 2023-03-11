@@ -35,17 +35,20 @@ export class TodoFormComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    const task = this.route.snapshot.data['task'];
+    console.log(task)
     const id: number = this.route.snapshot.params['id'];
-    if(id){
+    if (id) {
       this.service.getTaskById(id).subscribe(
         taskDetail => {
+          this.taskStore.updateTask({id: id, task: taskDetail});
           console.log(taskDetail)
           this.form.setValue({
               id: taskDetail.id,
               name: taskDetail.name,
               description: taskDetail.description,
               weekDay: taskDetail.weekDay
-            }
+            },
           );
         },
       )
@@ -55,8 +58,23 @@ export class TodoFormComponent implements OnInit {
 
 
   onSubmit() {
-    this.service.createTask(this.form.value)
-      .subscribe(result => this.onSuccess(), error => this.onError());
+    if (this.form.valid) {
+      const task : any = {
+        id: this.form.get('id')!.value,
+        name: this.form.get('name')!.value,
+        description: this.form.get('description')?.value,
+        weekDay: this.form.get('weekDay')!.value,
+      }
+
+      if (this.form.value.id) {
+        this.taskStore.updateTask({ task: task, id: task.id });
+      } else {
+        this.taskStore.createTask(task);
+      }
+
+      this.onSuccess();
+      this.onCancel();
+    }
   }
 
   getErrorMessage(fieldName: string) {

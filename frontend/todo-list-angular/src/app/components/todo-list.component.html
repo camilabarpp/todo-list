@@ -2,6 +2,7 @@
   <app-todo-list
     [tasks]="tasks"
     (add)="onAdd()"
+    (edit)="onEdit($event)"
     (remove)="onRemove($event)"
   ></app-todo-list>
 </div>

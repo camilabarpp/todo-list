@@ -1,10 +1,30 @@
 <section [ngClass]="{'loading': !tasks.length}">
   <ul *ngIf="tasks$ | async as tasks">
     <li *ngFor="let task of tasks">
-      <mat-checkbox color="primary"></mat-checkbox>
-      <a (click)="onEdit(task.id)">{{task.name}}</a>
-    </li>
+      <div>
+        <mat-checkbox color="primary"></mat-checkbox>
+        <span>{{task.name}}</span>
+      </div>
 
+      <div>
+        <button
+          mat-icon-button
+          color="warn"
+          aria-label="Remover Curso"
+          (click)="onDelete(task)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+
+        <button
+          mat-icon-button
+          color="primary"
+          aria-label="Editar Curso"
+          (click)="onEdit(task.id)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
   </ul>
 
   <div class="button">

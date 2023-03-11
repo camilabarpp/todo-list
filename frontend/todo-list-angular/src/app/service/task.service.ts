@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {first, Observable} from "rxjs";
 import {TaskModel} from "./task-model";
-import {TaskRequest} from "./task-request";
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +25,7 @@ export class TaskService {
     return this.httpClient.post<TaskModel>(this.API, record).pipe(first());
   }
 
-  updateTask(id: number, task: TaskRequest): Observable<TaskModel> {
+  updateTask(id: number, task: TaskModel): Observable<TaskModel> {
     return this.httpClient.put<TaskModel>(`${this.API}/${id}`, task);
   }
 

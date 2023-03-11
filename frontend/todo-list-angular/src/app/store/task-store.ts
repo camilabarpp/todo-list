@@ -3,7 +3,6 @@ import {Injectable} from "@angular/core";
 import {ComponentStore} from '@ngrx/component-store';
 import {Observable, Subscription, switchMap, tap} from "rxjs";
 import {TaskService} from "../service/task.service";
-import {TaskRequest} from "../service/task-request";
 
 export interface TaskState {
   tasks: TaskModel[];
@@ -14,7 +13,7 @@ export interface TaskState {
 const initialState: TaskState = {
   tasks: [],
   selectedTaskId: undefined,
-  taskDetails : undefined
+  taskDetails: undefined
 }
 
 @Injectable()
@@ -46,7 +45,7 @@ export class TaskStore extends ComponentStore<TaskState> {
           this.taskDetails$.subscribe(
             t => t = tasks
           )
-          console.log(tasks)
+        console.log(tasks)
       }),
     ),
   );
@@ -62,17 +61,17 @@ export class TaskStore extends ComponentStore<TaskState> {
   //   ),
   // );
 
-  readonly getTaskById = this.effect<any>((id$ : Observable<any>) =>
+  readonly getTaskById = this.effect<any>((id$: Observable<any>) =>
     id$.pipe(
       switchMap((id) => this._taskService.getTaskById(id)),
       tap((task) => {
-        this.patchState({ selectedTaskId: task.id });
+        this.patchState({selectedTaskId: task.id});
         console.log(task);
       })
     )
   );
 
-  readonly createTask = this.effect<TaskModel>((task$) =>
+  readonly createTask = this.effect<any>((task$) =>
     task$.pipe(
       switchMap((task) => this._taskService.createTask(task)),
       tap((createdTask) =>
@@ -83,7 +82,7 @@ export class TaskStore extends ComponentStore<TaskState> {
     ),
   );
 
-  readonly updateTask = this.effect<{ id: number; task: TaskRequest }>((payload$) =>
+  readonly updateTask = this.effect<{ id: number; task: TaskModel }>((payload$) =>
     payload$.pipe(
       switchMap(({id, task}) => this._taskService.updateTask(id, task)),
       tap((updatedTask) =>

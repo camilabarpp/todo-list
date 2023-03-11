@@ -20,14 +20,20 @@ section {
 
     li {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-
-      margin-bottom: 10px;
-
-      a {
-        cursor: pointer;
-      }
     }
+
+    li div:first-child {
+      display: flex;
+      align-items: center;
+    }
+
+    li div:last-child {
+      display: flex;
+      align-items: center;
+    }
+
   }
 
   .button {

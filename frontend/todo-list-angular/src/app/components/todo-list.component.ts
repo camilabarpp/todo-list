@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {TaskModel} from "../service/task-model";
 import {ErrorDialogComponent} from "../shared/error-dialog/error-dialog.component";
+import {ConfirmationDialogComponent} from "../shared/confirmation-dialog/confirmation-dialog.component";
 
 @Component({
   selector: 'todo-list',
@@ -67,6 +68,18 @@ export class TodoListComponent {
   // }
 
   onRemove(course: TaskModel) {
-    this.taskStore.deleteTask(course.id);
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: 'Tem certeza que deseja remover esse curso?',
+    });
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.taskStore.deleteTask(course.id);
+        this.refresh();
+
+      }
+    });
+
+
   }
 }
