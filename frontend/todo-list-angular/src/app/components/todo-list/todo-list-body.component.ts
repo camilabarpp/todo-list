@@ -11,8 +11,6 @@ import {Observable} from "rxjs";
 })
 export class TodoListBodyComponent {
   tasks$ = this.taskStore.tasks$;
-
-  teste?: Observable<TaskModel[]>;
   @Input() selected: boolean = false;
   @Input() tasks: TaskModel[] = [];
   @Output() add = new EventEmitter(false);
@@ -40,7 +38,7 @@ export class TodoListBodyComponent {
   }
 
   onTaskCompleted(id: number, taskModel: boolean) {
-    this.taskStore.updateTaskStatus({ id, completed: taskModel });
+    this.taskStore.updateTaskStatus({ id: id, completed: taskModel });
   }
 
 

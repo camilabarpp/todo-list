@@ -97,11 +97,11 @@ export class TaskStore extends ComponentStore<TaskState> {
     payload$.pipe(
       switchMap(({ id, completed }) => {
         const update = { completed }; // cria objeto com a propriedade "completed"
-        return this._taskService.updateTaskStatus(id, update); // envia objeto no corpo da requisição
+        return this._taskService.updateTaskStatus(id, update);
       }),
       tap((updatedTask) =>
         this.patchState((state) => ({
-          tasks: state.tasks?.map((task) => (task.id === updatedTask.id ? updatedTask : task)),
+          tasks: state.tasks!.map((task) => (task?.id === updatedTask?.id ? updatedTask : task)),
         })),
       ),
     ),
