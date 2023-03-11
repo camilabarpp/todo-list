@@ -29,6 +29,10 @@ export class TodoListBodyComponent {
     this.add.emit(true);
   }
 
+  onRefresh() {
+    this.taskStore.loadTasks();
+  }
+
   onEdit(taskId: number) {
     this.router.navigate(['edit', taskId], {relativeTo: this.route});
   }
