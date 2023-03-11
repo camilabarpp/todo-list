@@ -38,15 +38,21 @@ public class TaskService {
         return entityToRespopnse(
                 taskRepository.findById(id)
                         .map(taskEntity -> {
-                            taskEntity.setName(taskRequest.getName());
-                            taskEntity.setDescription(taskRequest.getDescription());
-//                            taskEntity.setCreatedDate(taskRequest.getCreatedDate());
-//                            taskEntity.setDueDate(taskRequest.getDueDate());
-//                            taskEntity.setCompletedDate(taskRequest.getCompletedDate());
+                            taskEntity.setCompleted(taskRequest.getCompleted());
                             return taskRepository.save(taskEntity);
                         })
                         .orElseThrow(() -> new RuntimeException("Task not found" + id))
         );
+    }
+
+
+    public void updateCompleted(Long id, Boolean completed) {
+       taskRepository.findById(id)
+                    .map(taskEntity -> {
+                        taskEntity.setCompleted(completed);
+                        return taskRepository.save(taskEntity);
+                    })
+                    .orElseThrow(() -> new RuntimeException("Task not found" + id));
     }
 
     public void deleteTask(Long id) {
