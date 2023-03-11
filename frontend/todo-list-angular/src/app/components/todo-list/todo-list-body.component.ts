@@ -11,19 +11,17 @@ import {Observable} from "rxjs";
 })
 export class TodoListBodyComponent {
   tasks$ = this.taskStore.tasks$;
-  @Input() selected: boolean = false;
   @Input() tasks: TaskModel[] = [];
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);
-
+  @Output() selected = new EventEmitter(false);
 
   constructor(
     private taskStore: TaskStore,
     private router: Router,
     private route: ActivatedRoute,
-  ) {
-  }
+  ) {}
 
   onAdd() {
     this.add.emit(true);
@@ -41,9 +39,7 @@ export class TodoListBodyComponent {
     this.remove.emit(taskModel);
   }
 
-  onTaskCompleted(id: number, taskModel: boolean) {
-    this.taskStore.updateTaskStatus({ id: id, completed: taskModel });
+  onSelected(taskModel: TaskModel) {
+    this.selected.emit(taskModel);
   }
-
-
 }

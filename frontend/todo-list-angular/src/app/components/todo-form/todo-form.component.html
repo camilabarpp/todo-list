@@ -42,6 +42,9 @@
   <mat-form-field appearance="outline">
     <mat-label>Dia da Semana:</mat-label>
     <mat-select formControlName="weekDay">
+      <mat-option [value]="'Diariamente'">
+        Diariamente
+      </mat-option>
       <mat-option [value]="'Segunda-feira'">
         Segunda-feira
       </mat-option>

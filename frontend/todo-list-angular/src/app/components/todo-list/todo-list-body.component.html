@@ -2,11 +2,10 @@
   <ul *ngIf="tasks$ | async as tasks">
     <li *ngFor="let task of tasks"
         [ngClass]="{ 'completed-task': task.completed, 'last-task': task.completed }">
-      <div (click)="onRefresh()">
+      <div (click)="onSelected(task)">
         <mat-checkbox
           color="primary"
           [checked]="task.completed"
-          (click)="onTaskCompleted(task.id, !task.completed)"
         ></mat-checkbox>
         <span>{{task.name}}</span>
       </div>

@@ -38,8 +38,9 @@ export class TodoListComponent {
     });
   }
 
-  onSelected(selected : boolean) : boolean {
-    return this.completed = selected;
+  onSelected(selected : TaskModel) {
+    this.taskStore.updateTaskStatus({ id: selected.id, completed: !selected.completed });
+    this.refresh();
   }
 
   onAdd() {
