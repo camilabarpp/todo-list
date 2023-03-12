@@ -1,5 +1,6 @@
 package camilabarpp.todolistjava.service;
 
+import camilabarpp.todolistjava.exception.NotFoundException;
 import camilabarpp.todolistjava.model.TaskMapper;
 import camilabarpp.todolistjava.model.TaskRequest;
 import camilabarpp.todolistjava.model.TaskResponse;
@@ -10,7 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static camilabarpp.todolistjava.model.TaskMapper.*;
+import static camilabarpp.todolistjava.model.TaskMapper.entityToResponse;
+import static camilabarpp.todolistjava.model.TaskMapper.requestToEntity;
 
 @Service
 @RequiredArgsConstructor
@@ -19,23 +21,23 @@ public class TaskService {
     private final TaskRepository taskRepository;
 
     public TaskResponse findById(Long id) {
-        return entityToRespopnse(taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found" + id)));
+        return entityToResponse(taskRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Task " + id + " not found ")));
     }
 
     public List<TaskResponse> findAll() {
         return taskRepository.findAll()
                 .stream()
-                .map(TaskMapper::entityToRespopnse)
+                .map(TaskMapper::entityToResponse)
                 .collect(Collectors.toList());
     }
 
     public TaskResponse save(TaskRequest taskRequest) {
-        return entityToRespopnse(taskRepository.save(requestToEntity(taskRequest)));
+        return entityToResponse(taskRepository.save(requestToEntity(taskRequest)));
     }
 
     public TaskResponse update(Long id, TaskRequest taskRequest) {
-        return entityToRespopnse(
+        return entityToResponse(
                 taskRepository.findById(id)
                         .map(taskEntity -> {
                             taskEntity.setName(taskRequest.getName());
@@ -44,18 +46,18 @@ public class TaskService {
                             taskEntity.setWeekDay(taskRequest.getWeekDay());
                             return taskRepository.save(taskEntity);
                         })
-                        .orElseThrow(() -> new RuntimeException("Task not found" + id))
-        );
+                        .orElseThrow(() -> new NotFoundException("Task " + id + " not found ")));
+
     }
 
 
     public void updateCompleted(Long id, Boolean completed) {
-       taskRepository.findById(id)
-                    .map(taskEntity -> {
-                        taskEntity.setCompleted(completed);
-                        return taskRepository.save(taskEntity);
-                    })
-                    .orElseThrow(() -> new RuntimeException("Task not found" + id));
+        taskRepository.findById(id)
+                .map(taskEntity -> {
+                    taskEntity.setCompleted(completed);
+                    return taskRepository.save(taskEntity);
+                })
+                .orElseThrow(() -> new NotFoundException("Task " + id + " not found "));
     }
 
     public void deleteTask(Long id) {

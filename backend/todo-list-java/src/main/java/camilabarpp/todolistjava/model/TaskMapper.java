@@ -4,7 +4,7 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class TaskMapper {
-    public static TaskResponse entityToRespopnse(TaskEntity taskEntity) {
+    public static TaskResponse entityToResponse(TaskEntity taskEntity) {
         return TaskResponse.builder()
                 .id(taskEntity.getId())
                 .name(taskEntity.getName())

@@ -5,20 +5,21 @@ html, body {
 }
 
 body {
-  background-color: #0e103d;
+  background-color: #ccd5ae;
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.container {
-  max-width: 70%;
-  margin: 0 10%;
+@media only screen and (max-width: 1299px) {
+  .container-section {
+    margin: 0 10%;
+  }
 }
 
-.container-section {
-  display: flex;
-  flex-direction: column;
-  min-width: 300px;
-  //max-width: 80%;
-  text-align: center;
+@media only screen and (min-width: 1300px) {
+  .container-section {
+    margin: 0 30%;
+  }
 }
+
+

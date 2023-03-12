@@ -3,7 +3,9 @@ package camilabarpp.todolistjava.controller;
 import camilabarpp.todolistjava.model.TaskRequest;
 import camilabarpp.todolistjava.model.TaskResponse;
 import camilabarpp.todolistjava.service.TaskService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,17 +33,18 @@ public class TaskController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public TaskResponse save(@RequestBody TaskRequest taskRequest) {
+    public TaskResponse save(@RequestBody @Valid TaskRequest taskRequest) {
         return taskService.save(taskRequest);
     }
 
     @PutMapping("/{id}")
-    public TaskResponse update(@PathVariable Long id, @RequestBody TaskRequest taskRequest) {
+    public TaskResponse update(
+            @PathVariable Long id, @RequestBody @Valid TaskRequest taskRequest) {
         return taskService.update(id, taskRequest);
     }
 
     @PatchMapping("/{id}")
-    public void updateCompleted(@PathVariable Long id, @RequestBody Map<String, Boolean> completed) {
+    public void updateCompleted(@PathVariable Long id, @RequestBody @Valid Map<String, Boolean> completed) {
         taskService.updateCompleted(id, completed.get("completed"));
     }
 

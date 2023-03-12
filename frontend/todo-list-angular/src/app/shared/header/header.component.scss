@@ -1,12 +1,15 @@
 h1 {
   padding: 15px 15px;
-
   text-align: center;
   font-size: 18px;
   margin: 0;
 }
 
 mat-toolbar {
+  display: flex;
+  justify-content: center;
   margin-top: 10%;
-  background-color: #449dd1;
+  background-color: #e9edc9;
+
+  border-radius: 10px;
 }
