@@ -204,7 +204,7 @@ class TaskControllerTest {
 
         String content = result.getResponse().getContentAsString();
 
-        assertThat(content).isEqualTo(result.getResponse().getContentAsString());
+        assertThat(content).isEmpty();
     }
 
     @Test
