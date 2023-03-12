@@ -29,6 +29,8 @@ section {
       border-radius: 10px;
       background-color: #ced4da;
 
+
+
     }
 
     li div:first-child {
@@ -40,7 +42,6 @@ section {
       display: flex;
       align-items: center;
     }
-
   }
 
   .button {
@@ -49,14 +50,26 @@ section {
     justify-content: center;
 
     padding-bottom: 30px;
-  }
 
+    .addButton {
+      background-color: black;
+
+      span {
+        color: white;
+      }
+      mat-icon {
+        color: white;
+      }
+    }
+  }
   .completed-task {
     text-decoration: line-through;
   }
+}
 
-  .last-task {
-    order: 1;
-  }
-
+.mat-mdc-checkbox.mat-accent {
+  --mdc-checkbox-selected-icon-color: #ced4da;
+  --mdc-checkbox-selected-focus-icon-color: #ced4da;
+  --mdc-checkbox-selected-hover-icon-color: #ced4da;
+  --mdc-checkbox-selected-pressed-icon-color: #ced4da
 }

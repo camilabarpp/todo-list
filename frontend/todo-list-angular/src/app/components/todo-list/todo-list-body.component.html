@@ -4,18 +4,17 @@
         [ngClass]="{ 'completed-task': task.completed, 'last-task': task.completed }">
       <div (click)="onSelected(task)">
         <mat-checkbox
-          color="primary"
           [checked]="task.completed"
         ></mat-checkbox>
         <span>{{task.name}}</span>
       </div>
 
       <div>
-        <button mat-icon-button color="warn" aria-label="Remover Curso" (click)="onDelete(task)">
+        <button mat-icon-button aria-label="Remover Curso" (click)="onDelete(task)">
           <mat-icon>delete</mat-icon>
         </button>
 
-        <button mat-icon-button color="primary" aria-label="Editar Curso" (click)="onEdit(task.id)">
+        <button mat-icon-button aria-label="Editar Curso" (click)="onEdit(task.id)">
           <mat-icon>edit</mat-icon>
         </button>
       </div>
@@ -25,16 +24,13 @@
 
   <div class="button">
     <button
-      mat-raised-button
-      color="primary"
+      mat-stroked-button
       aria-label="Adicionar uma tarefa"
       (click)="onAdd()"
-      class="action-column-header"
+      class="addButton"
     >
       <span>Adicionar tarefa</span>
       <mat-icon>add</mat-icon>
     </button>
-
-    <!--    <button class="button" color="primary" (click)="on()" mat-raised-button>Cancelar</button>-->
   </div>
 </section>
