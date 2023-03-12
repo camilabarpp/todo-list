@@ -124,7 +124,7 @@ class TaskServiceTest {
     @Test
     @DisplayName("Deve lançar NullPointerException quanto estiver faltando dados para salvar uma tarefa")
     void save_ShouldThrowNullPointerException() {
-        TaskRequest request = invalidTaskEntity();
+        TaskRequest request = invalidTaskRequest();
 
         when(repository.findById(anyLong())).thenReturn(Optional.empty());
 
@@ -134,7 +134,7 @@ class TaskServiceTest {
     @Test
     @DisplayName("Deve lançar ConstraintViolationException quanto estiver faltando dados para salvar uma tarefa")
     void save_ShouldThrowConstraintViolationException() {
-        TaskRequest request = invalidTaskEntity();
+        TaskRequest request = invalidTaskRequest();
 
         when(repository.save(requestToEntity(request))).thenThrow(ConstraintViolationException.class);
 
