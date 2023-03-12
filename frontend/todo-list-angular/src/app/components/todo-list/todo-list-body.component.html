@@ -1,7 +1,7 @@
 <section [ngClass]="{'loading': !tasks.length}">
   <ul *ngIf="tasks$ | async as tasks">
-    <li *ngFor="let task of tasks"
-        [ngClass]="{ 'completed-task': task.completed, 'last-task': task.completed }">
+    <li *ngFor="let task of tasks | sortCompleted"
+        [ngClass]="{ 'completed-task': task.completed}">
       <div (click)="onSelected(task)">
         <mat-checkbox
           [checked]="task.completed"

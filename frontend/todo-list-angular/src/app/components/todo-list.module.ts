@@ -7,12 +7,14 @@ import {TodoListRoutingModule} from "./todo-list-routing.module";
 import {TodoListBodyComponent} from "./todo-list/todo-list-body.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { TodoFormComponent } from './todo-form/todo-form.component';
+import { SortCompletedPipe } from './pipe/sort-completed.pipe';
 
 @NgModule({
   declarations: [
     TodoListComponent,
     TodoListBodyComponent,
     TodoFormComponent,
+    SortCompletedPipe,
   ],
     imports: [
         CommonModule,
