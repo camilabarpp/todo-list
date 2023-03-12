@@ -1,6 +1,4 @@
-# People Registration API (Desafio Attornatus)
-
-[Link do build do projeto](https://app.travis-ci.com/github/camilabarpp/people-registration)
+# ToDo List em Angular 15 e Java 17
 
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.0.4-blue.svg)](https://spring.io/projects/spring-boot)
 [![Java](https://img.shields.io/badge/Java-17-green.svg)](https://java.org/java/)
