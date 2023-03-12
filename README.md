@@ -7,6 +7,9 @@
 [![JUnit](https://img.shields.io/badge/JUnit-5.9.0-green.svg)](https://junit.org/junit5/)
 [![Gradle](https://img.shields.io/badge/Gradle-7.6-red.svg)](https://gradle.org/)
 
+<img src="https://github.com/camilabarpp/todo-list/blob/main/frontend/desktop.png" alt="texto alternativo" style="width:700px;height:500px;">
+
+<img src="https://github.com/camilabarpp/todo-list/blob/main/frontend/mobile.png" alt="texto alternativo" style="width:350px;height:600px;">
 
 # Para executar o projeto
 
