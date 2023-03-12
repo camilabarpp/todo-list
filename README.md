@@ -9,7 +9,7 @@
 
 # Para executar o projeto
 
-Git clone no repositório people-registration
+Git clone no repositório todo-list
 ```bash 
 https://github.com/camilabarpp/todo-list.git
 ```
@@ -48,6 +48,7 @@ http://localhost:8080/api/v1/tasks/1
 - MySQL
 - Angular 15
 - Typescript
+- NGXS - Component Store
 
 <img src="https://github.com/camilabarpp/todo-list/blob/main/frontend/desktop.png" alt="texto alternativo">
 
