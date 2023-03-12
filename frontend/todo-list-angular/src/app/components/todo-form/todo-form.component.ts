@@ -29,7 +29,7 @@ export class TodoFormComponent implements OnInit {
   form = this.fb.group({
     id: 0,
     name: ['', [Validators.required,
-      Validators.minLength(5),
+      Validators.minLength(3),
       Validators.maxLength(100)]],
     description: [''],
     weekDay: ['', [Validators.required]],
@@ -94,7 +94,7 @@ export class TodoFormComponent implements OnInit {
     if (field?.hasError('required')) {
       return 'Campo obrigatório';
     }
-    return 'Campo Inválido';
+    return 'Campo obrigatório';
   }
 
   private onSuccess() {

@@ -1,12 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  name: 'sortCompleted'
-})
+@Pipe({ name: 'sortCompleted' })
 export class SortCompletedPipe implements PipeTransform {
+  transform(array: any[]): any[] {
+    if (!Array.isArray(array)) {
+      return array;
+    }
 
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return null;
+    const completed = array.filter(item => item.completed);
+    const notCompleted = array.filter(item => !item.completed);
+    return [...notCompleted, ...completed];
   }
-
 }

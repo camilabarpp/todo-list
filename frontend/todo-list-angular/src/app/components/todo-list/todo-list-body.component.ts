@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {TaskStore} from "../../store/task-store";
 import {TaskModel} from "../../service/task-model";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-todo-list',
@@ -21,14 +20,11 @@ export class TodoListBodyComponent {
     private taskStore: TaskStore,
     private router: Router,
     private route: ActivatedRoute,
-  ) {}
+  ) {
+  }
 
   onAdd() {
     this.add.emit(true);
-  }
-
-  onRefresh() {
-    this.taskStore.loadTasks();
   }
 
   onEdit(taskId: number) {
