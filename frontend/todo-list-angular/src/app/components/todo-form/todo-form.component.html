@@ -29,7 +29,7 @@
 <!--  </ul>-->
 <!--</section>-->
 
-<form [formGroup]="form" class="form" *ngIf="tasks$ | async as tasks">
+<form [formGroup]="form" class="form"  *ngIf="tasks$ | async as tasks">
   <mat-form-field appearance="outline">
     <mat-label>Digite uma tarefa</mat-label>
     <input matInput placeholder="Ler um livro" formControlName="name" required>
