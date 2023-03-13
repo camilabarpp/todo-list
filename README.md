@@ -1,19 +1,15 @@
 # ToDo List em Angular 15 e Java 17
 
-[Link do build do projeto](https://app.travis-ci.com/github/camilabarpp/people-registration)
-
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.0.4-blue.svg)](https://spring.io/projects/spring-boot)
 [![Java](https://img.shields.io/badge/Java-17-green.svg)](https://java.org/java/)
 [![JUnit](https://img.shields.io/badge/JUnit-5.9.0-green.svg)](https://junit.org/junit5/)
 [![Gradle](https://img.shields.io/badge/Gradle-7.6-red.svg)](https://gradle.org/)
 
-<img src="https://github.com/camilabarpp/todo-list/blob/main/frontend/desktop.png" alt="texto alternativo" style="width:700px;height:500px;">
 
-<img src="https://github.com/camilabarpp/todo-list/blob/main/frontend/mobile.png" alt="texto alternativo" style="width:350px;height:600px;">
 
 # Para executar o projeto
 
-Git clone no repositório people-registration
+Git clone no repositório todo-list
 ```bash 
 https://github.com/camilabarpp/todo-list.git
 ```
@@ -52,6 +48,9 @@ http://localhost:8080/api/v1/tasks/1
 - MySQL
 - Angular 15
 - Typescript
+- NGXS - Component Store
+
+<img src="https://github.com/camilabarpp/todo-list/blob/main/frontend/desktop.png" alt="texto alternativo">
 
 ## Autor
 
