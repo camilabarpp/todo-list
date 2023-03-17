@@ -30,7 +30,7 @@ export class TodoFormComponent implements OnInit {
     id: 0,
     name: ['', [Validators.required,
       Validators.minLength(3),
-      Validators.maxLength(100)]],
+      Validators.maxLength(15)]],
     description: [''],
     weekDay: ['', [Validators.required]],
   });
@@ -91,8 +91,14 @@ export class TodoFormComponent implements OnInit {
       return 'Campo obrigatório';
     }
 
-    if (field?.hasError('required')) {
-      return 'Campo obrigatório';
+    if (field?.hasError('minlength')) {
+      const requiredLength: number = field?.errors ? field.errors['minlength']['requiredLength'] : 5;
+      return `Tamanho mínimo precisa ser de ${requiredLength} caracteres.`;
+    }
+
+    if (field?.hasError('maxlength')) {
+      const requiredLength: number = field?.errors ? field.errors['maxlength']['requiredLength'] : 15;
+      return `Maior que ${requiredLength} caracteres.`;
     }
     return 'Campo obrigatório';
   }

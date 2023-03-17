@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {TaskStore} from "../../store/task-store";
 import {TaskModel} from "../../service/task-model";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -9,6 +9,8 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./todo-list-body.component.scss']
 })
 export class TodoListBodyComponent {
+
+  savingTask: boolean = false;
   tasks$ = this.taskStore.tasks$;
   @Input() tasks: TaskModel[] = [];
   @Output() add = new EventEmitter(false);
@@ -37,5 +39,7 @@ export class TodoListBodyComponent {
 
   onSelected(taskModel: TaskModel) {
     this.selected.emit(taskModel);
+    this.savingTask = true;
+    this.taskStore.loadTasks();
   }
 }
