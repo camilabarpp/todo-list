@@ -5,7 +5,6 @@
       <div (click)="onSelected(task)">
         <mat-checkbox
           [checked]="task.completed"
-          (click)="savingTask = true;"
         ></mat-checkbox>
         <span>{{task.name}}</span>
       </div>

@@ -55,10 +55,7 @@ export class TodoFormComponent implements OnInit {
         },
       )
     }
-
   }
-
-
   onSubmit() {
     if (this.form.valid) {
       const task: any = {
@@ -83,7 +80,6 @@ export class TodoFormComponent implements OnInit {
       this.onError();
     }
   }
-
   getErrorMessage(fieldName: string) {
     const field = this.form?.get(fieldName);
 
