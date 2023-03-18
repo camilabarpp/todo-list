@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "tasks")
 @Builder
@@ -21,6 +23,8 @@ public class TaskEntity {
     private String name;
     @Column(length = 100)
     private String description;
+    @Column(length = 20, nullable = false)
+    private LocalDate dueDate;
     @Column(length = 100, nullable = false)
     private Boolean completed;
     @Column(length = 20, nullable = false)

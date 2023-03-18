@@ -10,6 +10,7 @@ public class TaskMapper {
                 .name(taskEntity.getName())
                 .description(taskEntity.getDescription())
                 .completed(taskEntity.getCompleted())
+                .dueDate(taskEntity.getDueDate())
                 .weekDay(taskEntity.getWeekDay())
                 .build();
     }
@@ -19,6 +20,7 @@ public class TaskMapper {
                 .name(taskRequest.getName())
                 .description(taskRequest.getDescription())
                 .completed(taskRequest.getCompleted())
+                .dueDate(taskRequest.getDueDate())
                 .weekDay(taskRequest.getWeekDay())
                 .build();
     }
@@ -28,6 +30,7 @@ public class TaskMapper {
                 .name(taskResponse.getName())
                 .description(taskResponse.getDescription())
                 .completed(taskResponse.getCompleted())
+                .dueDate(taskResponse.getDueDate())
                 .weekDay(taskResponse.getWeekDay())
                 .build();
     }
