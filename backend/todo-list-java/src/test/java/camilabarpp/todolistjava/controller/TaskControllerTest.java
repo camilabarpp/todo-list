@@ -2,7 +2,6 @@ package camilabarpp.todolistjava.controller;
 
 import camilabarpp.todolistjava.model.TaskRequest;
 import camilabarpp.todolistjava.repository.TaskRepository;
-import camilabarpp.todolistjava.service.TaskService;
 import camilabarpp.todolistjava.stub.TaskStubs;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
@@ -29,9 +28,6 @@ class TaskControllerTest {
 
     @Autowired
     private MockMvc mvc;
-
-    @Autowired
-    private TaskService taskService;
 
     @Autowired
     private TaskRepository taskRepository;

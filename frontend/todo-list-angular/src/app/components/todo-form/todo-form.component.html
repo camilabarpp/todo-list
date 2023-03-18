@@ -1,43 +1,22 @@
-<!--<section [ngClass]="{'loading': !taskList.length}">-->
-<!--  <ul *ngIf="taskList.length">-->
-<!--    <li *ngFor="let item of taskList; let i = index">-->
-<!--      <input type="checkbox" [(ngModel)]="item.checked">-->
-<!--      <input type="text"(keyup)="validationInput(item.task, i)" [(ngModel)]="item.task" [ngClass]="{'checked': item.checked}">-->
-
-<!--      <button (click)="deleteItemTaskList(i)">-->
-<!--        <img src="../../../../../../../todo-list/frontend/todo-list-angular/src/assets/icon/Vector.svg" alt="">-->
-<!--      </button>-->
-<!--    </li>-->
-<!--  </ul>-->
-<!--</section>-->
-
-<!--<app-button-add-itens (emitItemTaskList)="setEmitTaskList($event)"></app-button-add-itens>-->
-<!--<app-button-button-delete *ngIf="taskList.length" (click)="deleteAllTaskList()"></app-button-button-delete>-->
-<!--<section>-->
-<!--  <ul *ngIf="tasks$ | async as tasks">-->
-<!--    <li *ngFor="let task of tasks">-->
-<!--      <div class="example-container">-->
-<!--        <mat-form-field appearance="outline">-->
-<!--          <mat-label>Enter your email</mat-label>-->
-<!--          <input matInput placeholder="pat@example.com" [formControl]="email" required>-->
-<!--          <mat-error *ngIf="tasks.invalid">{{getErrorMessage()}}</mat-error>-->
-<!--        </mat-form-field>-->
-<!--      </div>-->
-<!--      <p>{{task.name}}</p>-->
-<!--      <p>{{task.description}}</p>-->
-<!--    </li>-->
-<!--  </ul>-->
-<!--</section>-->
-
-<form [formGroup]="form" class="form"  *ngIf="tasks$ | async as tasks">
+<form [formGroup]="form" class="form" *ngIf="tasks$ | async as tasks">
   <mat-form-field appearance="outline">
     <mat-label>Digite uma tarefa</mat-label>
-    <input matInput placeholder="Ler um livro" formControlName="name" required>
+    <input
+      matInput
+      placeholder="Ler um livro"
+      formControlName="name"
+      required #name>
+    <mat-hint align="end">{{ name.value?.length || 0 }} / 15</mat-hint>
     <mat-error *ngIf="form.invalid">{{getErrorMessage('name')}}</mat-error>
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Digite uma descrição</mat-label>
-    <input matInput placeholder="Ler 10 páginas por dia" formControlName="description">
+    <textarea
+      matInput
+      class="input-description"
+      placeholder="Ler 10 páginas por dia"
+      formControlName="description">
+    </textarea>
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-error *ngIf="form.invalid">{{getErrorMessage('weekDay')}}</mat-error>

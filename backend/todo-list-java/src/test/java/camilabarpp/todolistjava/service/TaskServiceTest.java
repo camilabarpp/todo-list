@@ -2,7 +2,6 @@ package camilabarpp.todolistjava.service;
 
 import camilabarpp.todolistjava.exception.NotFoundException;
 import camilabarpp.todolistjava.model.TaskEntity;
-import camilabarpp.todolistjava.model.TaskMapper;
 import camilabarpp.todolistjava.model.TaskRequest;
 import camilabarpp.todolistjava.model.TaskResponse;
 import camilabarpp.todolistjava.repository.TaskRepository;
@@ -14,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,9 +99,7 @@ class TaskServiceTest {
         when(repository.findById(invalidId))
                 .thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class, () -> {
-            service.update(invalidId, personRequest);
-        });
+        assertThrows(NotFoundException.class, () -> service.update(invalidId, personRequest));
     }
 
 
