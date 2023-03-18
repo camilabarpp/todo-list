@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {TaskStore} from "../../store/task-store";
 import {TaskModel} from "../../service/task-model";
 import {ActivatedRoute, Router} from "@angular/router";
+import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-esbuild/esbuild";
 
 @Component({
   selector: 'app-todo-list',
@@ -9,6 +10,8 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./todo-list-body.component.scss']
 })
 export class TodoListBodyComponent {
+
+  savingTask: boolean = false;
   tasks$ = this.taskStore.tasks$;
   @Input() tasks: TaskModel[] = [];
   @Output() add = new EventEmitter(false);
@@ -28,7 +31,7 @@ export class TodoListBodyComponent {
   }
 
   onEdit(taskId: number) {
-    this.router.navigate(['edit', taskId], {relativeTo: this.route});
+    this.router.navigate(['edit', taskId], {relativeTo: this.route}).then(r => console.log(r));
   }
 
   onDelete(taskModel: TaskModel) {
@@ -37,5 +40,6 @@ export class TodoListBodyComponent {
 
   onSelected(taskModel: TaskModel) {
     this.selected.emit(taskModel);
+    this.taskStore.loadTasks();
   }
 }

@@ -14,12 +14,6 @@ public class TaskMapper {
                 .build();
     }
 
-//    public static List<TaskResponse> responseFromEntityList(List<Task> personEntity) {
-//        return personEntity.stream()
-//                .map(PersonMapper::entityToRespopnse)
-//                .collect(Collectors.toList());
-//    }
-
     public static TaskEntity requestToEntity(TaskRequest taskRequest) {
         return TaskEntity.builder()
                 .name(taskRequest.getName())

@@ -13,6 +13,19 @@ Git clone no repositório todo-list
 ```bash 
 https://github.com/camilabarpp/todo-list.git
 ```
+Para abrir o projeto em Java, no terminal digite, para executar a api:
+```
+cd backend/todo-list-java/
+gradle build
+gradle bootRun
+```
+
+Para abrir o projeto em Angular, no terminal digite, para executar-la:
+```
+cd frontend/todo-list-angular/
+npm i
+npm run start
+```
 
 
 # 🚀 Sobre o projeto
@@ -28,6 +41,7 @@ https://github.com/camilabarpp/todo-list.git
     },
 ```
 
+
 # ****ENDPOINTS****
 
 List all tasks (GET), Delete all tasks (DELETE), Create a task (POST)
@@ -40,15 +54,21 @@ http://localhost:8080/api/v1/tasks/1
 ```
 
 # Tecnologias utilizadas
-## Back end
+## Backend
 - Java 17
 - Spring Boot
 - Junit e Mockito
 - Gradle
 - MySQL
+
+## Frontend
 - Angular 15
-- Typescript
+- Angular CLI: 15
+- Typescript 4.9
+- Node: 18.14.2
 - NGXS - Component Store
+
+
 
 <img src="https://github.com/camilabarpp/todo-list/blob/main/frontend/desktop.png" alt="texto alternativo">
 
