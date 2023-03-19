@@ -37,12 +37,16 @@ public class TaskServiceV2 {
                 .collect(Collectors.toList());
     }
 
-    public List<TaskEntity> findByCategory(String category) {
-        return taskRepository.findByCategory(category);
-    }
+//    public List<TaskEntity> findByCategory(String categoryName) {
+//        return taskRepository.findAllByCategoryCategoryNameContains(categoryName);
+//    }
 
     public List<TaskEntity> findByDueDateBetween(LocalDate start, LocalDate end) {
         return taskRepository.findByDueDateBetween(start, end);
+    }
+
+    public List<TaskEntity> findByTaskTitle(String taskTitle) {
+        return taskRepository.findAllByTaskTitleContaining(taskTitle);
     }
 
     public List<TaskEntity> findByDueDate(LocalDate date) {

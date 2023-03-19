@@ -5,7 +5,6 @@ import camilabarpp.todolistjava.model.task.TaskRequest;
 import camilabarpp.todolistjava.model.task.TaskResponse;
 import camilabarpp.todolistjava.service.TaskServiceV2;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -54,10 +53,10 @@ public class TaskControllerV2 {
         taskServiceV2.deleteAll();
     }
 
-    @GetMapping(params = "category")
-    public List<TaskEntity> findByCategory(@RequestParam String category) {
-        return taskServiceV2.findByCategory(category);
-    }
+//    @GetMapping(params = "category")
+//    public List<TaskEntity> findByCategory(@RequestParam String categoryName) {
+//        return taskServiceV2.findByCategory(categoryName);
+//    }
 
     @GetMapping(params = "dueDate")
     public List<TaskEntity> findByDueDate(@RequestParam LocalDate dueDate) {
@@ -67,5 +66,10 @@ public class TaskControllerV2 {
     @GetMapping(params = {"start", "end"})
     public List<TaskEntity> findByDueDateBetween(@RequestParam LocalDate start, @RequestParam LocalDate end) {
         return taskServiceV2.findByDueDateBetween(start, end);
+    }
+
+    @GetMapping(params = "taskTitle")
+    public List<TaskEntity> findByTaskTitle(@RequestParam String taskTitle) {
+        return taskServiceV2.findByTaskTitle(taskTitle);
     }
 }
