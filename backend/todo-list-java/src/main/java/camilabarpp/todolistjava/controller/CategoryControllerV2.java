@@ -22,7 +22,7 @@ public class CategoryControllerV2 {
         return categoryServiceV2.findAll();
     }
     @GetMapping(params = "categoryName")
-    public List<CategoryEntity> findByCategory(@RequestParam String categoryName) {
+    public CategoryEntity findByCategory(@RequestParam String categoryName) {
         return categoryServiceV2.findByCategory(categoryName);
     }
 

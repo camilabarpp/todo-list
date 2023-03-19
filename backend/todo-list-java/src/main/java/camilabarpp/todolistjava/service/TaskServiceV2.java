@@ -6,7 +6,6 @@ import camilabarpp.todolistjava.model.task.TaskEntity;
 import camilabarpp.todolistjava.model.task.TaskMapper;
 import camilabarpp.todolistjava.model.task.TaskRequest;
 import camilabarpp.todolistjava.model.task.TaskResponse;
-import camilabarpp.todolistjava.repository.CategoryRepository;
 import camilabarpp.todolistjava.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,7 @@ import static camilabarpp.todolistjava.model.task.TaskMapper.requestToEntity;
 public class TaskServiceV2 {
 
     private final TaskRepository taskRepository;
-    private final CategoryRepository categoryRepository;
+    private final CategoryServiceV2 categoryServiceV2;
 
     public TaskResponse findById(Long id) {
         return entityToResponse(taskRepository.findById(id)
@@ -55,13 +54,12 @@ public class TaskServiceV2 {
 
     public TaskResponse save(TaskRequest taskRequest) {
         if (taskRequest.getCategory() == null) {
-            CategoryEntity defaultCategory = categoryRepository.save(CategoryEntity
-                    .builder()
-                    .categoryName("Sem categoria")
-                    .build());
-            taskRequest.setCategory(defaultCategory);
+            CategoryEntity withoutCategory = categoryServiceV2.findById(28L);
+            taskRequest.setCategory(withoutCategory);
         } else {
-            categoryRepository.save(taskRequest.getCategory());
+            CategoryEntity category;
+            category = categoryServiceV2.findByCategory(taskRequest.getCategory().getCategoryName());
+            taskRequest.setCategory(category);
         }
         return entityToResponse(taskRepository.save(requestToEntity(taskRequest)));
     }
@@ -74,8 +72,8 @@ public class TaskServiceV2 {
                             taskEntity.setDescription(taskRequest.getDescription());
                             taskEntity.setCompleted(taskRequest.getCompleted());
                             taskEntity.setDueDate(taskRequest.getDueDate());
-                            categoryRepository.findById(taskEntity.getCategory().getCategoryId())
-                                    .ifPresent(taskRequest::setCategory);
+//                            categoryServiceV2.findById(taskEntity.getCategory().getCategoryId())
+//                                    .ifPresent(taskRequest::setCategory);
                             return taskRepository.save(taskEntity);
                         })
                         .orElseThrow(() -> new NotFoundException("Task " + id + " not found ")));

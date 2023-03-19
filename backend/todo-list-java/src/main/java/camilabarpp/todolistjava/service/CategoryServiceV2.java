@@ -19,7 +19,7 @@ public class CategoryServiceV2 {
         return categoryRepository.findAll();
     }
 
-    public List<CategoryEntity> findByCategory(String categoryName) {
+    public CategoryEntity findByCategory(String categoryName) {
         return categoryRepository.findAllByCategoryNameContains(categoryName);
     }
 
@@ -41,6 +41,8 @@ public class CategoryServiceV2 {
                 .orElseThrow(() ->
                         new NotFoundException("Categoria " + categoryEntity.getCategoryName() + " não encontrads!")));
     }
+
+
 
     public void delete(Long id) {
         categoryRepository.deleteById(id);
