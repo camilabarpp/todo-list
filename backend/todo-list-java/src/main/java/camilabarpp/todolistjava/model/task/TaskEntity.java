@@ -1,5 +1,6 @@
-package camilabarpp.todolistjava.model;
+package camilabarpp.todolistjava.model.task;
 
+import camilabarpp.todolistjava.model.category.CategoryEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "tasks")
+@Table(name = "tasksV2")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,16 +19,17 @@ public class TaskEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long taskId;
     @Column(length = 50, nullable = false)
-    private String name;
+    private String taskTitle;
     @Column(length = 100)
     private String description;
     @Column(length = 20, nullable = false)
     private LocalDate dueDate;
     @Column(length = 100, nullable = false)
     private Boolean completed;
-    @Column(length = 20, nullable = false)
-    private String weekDay;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private CategoryEntity category;
 }
 

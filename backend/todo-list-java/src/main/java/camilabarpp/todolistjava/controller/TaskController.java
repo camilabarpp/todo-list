@@ -1,7 +1,7 @@
 package camilabarpp.todolistjava.controller;
 
-import camilabarpp.todolistjava.model.TaskRequest;
-import camilabarpp.todolistjava.model.TaskResponse;
+import camilabarpp.todolistjava.model.task.TaskRequest;
+import camilabarpp.todolistjava.model.task.TaskResponse;
 import camilabarpp.todolistjava.service.TaskService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

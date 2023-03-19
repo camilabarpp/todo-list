@@ -1,8 +1,8 @@
 package camilabarpp.todolistjava.stub;
 
-import camilabarpp.todolistjava.model.TaskEntity;
-import camilabarpp.todolistjava.model.TaskRequest;
-import camilabarpp.todolistjava.model.TaskResponse;
+import camilabarpp.todolistjava.model.task.TaskEntity;
+import camilabarpp.todolistjava.model.task.TaskRequest;
+import camilabarpp.todolistjava.model.task.TaskResponse;
 
 public class TaskStubs {
 
@@ -31,8 +31,8 @@ public class TaskStubs {
 
     public static TaskResponse taskResponse() {
         return TaskResponse.builder()
-                .id(1L)
-                .name("Pagar a luz")
+                .taskId(1L)
+                .taskTitle("Pagar a luz")
                 .description("Entrar no site e gerar o boleto")
                 .completed(false)
                 .weekDay("Quarta-feira")
@@ -41,7 +41,7 @@ public class TaskStubs {
 
     public static TaskRequest taskRequest() {
         return TaskRequest.builder()
-                .name("Pagar a luz")
+                .taskTitle("Pagar a luz")
                 .description("Entrar no site e gerar o boleto")
                 .completed(false)
                 .weekDay("Quarta-feira")
@@ -50,7 +50,7 @@ public class TaskStubs {
 
     public static TaskRequest invalidTaskRequest() {
         return TaskRequest.builder()
-                .name("")
+                .taskTitle("")
                 .description("")
                 .completed(null)
                 .weekDay("")
@@ -59,7 +59,7 @@ public class TaskStubs {
 
     public static TaskRequest invalidTaskRequestWithoutValidName() {
         return TaskRequest.builder()
-                .name(invalidName)
+                .taskTitle(invalidName)
                 .description("Entrar no site e gerar o boleto")
                 .completed(false)
                 .weekDay("Quarta-feira")

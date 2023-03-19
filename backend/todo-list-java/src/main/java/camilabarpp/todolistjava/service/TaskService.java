@@ -1,9 +1,9 @@
 package camilabarpp.todolistjava.service;
 
 import camilabarpp.todolistjava.exception.NotFoundException;
-import camilabarpp.todolistjava.model.TaskMapper;
-import camilabarpp.todolistjava.model.TaskRequest;
-import camilabarpp.todolistjava.model.TaskResponse;
+import camilabarpp.todolistjava.model.task.TaskMapper;
+import camilabarpp.todolistjava.model.task.TaskRequest;
+import camilabarpp.todolistjava.model.task.TaskResponse;
 import camilabarpp.todolistjava.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static camilabarpp.todolistjava.model.TaskMapper.entityToResponse;
-import static camilabarpp.todolistjava.model.TaskMapper.requestToEntity;
+import static camilabarpp.todolistjava.model.task.TaskMapper.entityToResponse;
+import static camilabarpp.todolistjava.model.task.TaskMapper.requestToEntity;
 
 @Service
 @RequiredArgsConstructor
@@ -40,10 +40,11 @@ public class TaskService {
         return entityToResponse(
                 taskRepository.findById(id)
                         .map(taskEntity -> {
-                            taskEntity.setName(taskRequest.getName());
+                            taskEntity.setTaskTitle(taskRequest.getTaskTitle());
                             taskEntity.setDescription(taskRequest.getDescription());
                             taskEntity.setCompleted(taskRequest.getCompleted());
-                            taskEntity.setWeekDay(taskRequest.getWeekDay());
+                            taskEntity.setDueDate(taskRequest.getDueDate());
+                            taskEntity.setCategory(taskRequest.getCategory());
                             return taskRepository.save(taskEntity);
                         })
                         .orElseThrow(() -> new NotFoundException("Task " + id + " not found ")));

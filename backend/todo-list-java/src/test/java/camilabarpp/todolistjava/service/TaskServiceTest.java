@@ -1,9 +1,9 @@
 package camilabarpp.todolistjava.service;
 
 import camilabarpp.todolistjava.exception.NotFoundException;
-import camilabarpp.todolistjava.model.TaskEntity;
-import camilabarpp.todolistjava.model.TaskRequest;
-import camilabarpp.todolistjava.model.TaskResponse;
+import camilabarpp.todolistjava.model.task.TaskEntity;
+import camilabarpp.todolistjava.model.task.TaskRequest;
+import camilabarpp.todolistjava.model.task.TaskResponse;
 import camilabarpp.todolistjava.repository.TaskRepository;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.DisplayName;
@@ -16,8 +16,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static camilabarpp.todolistjava.model.TaskMapper.requestToEntity;
-import static camilabarpp.todolistjava.model.TaskMapper.responseToEntity;
+import static camilabarpp.todolistjava.model.task.TaskMapper.requestToEntity;
+import static camilabarpp.todolistjava.model.task.TaskMapper.responseToEntity;
 import static camilabarpp.todolistjava.stub.TaskStubs.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
