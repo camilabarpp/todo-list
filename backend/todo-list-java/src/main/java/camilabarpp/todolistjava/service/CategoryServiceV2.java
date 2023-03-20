@@ -30,19 +30,18 @@ public class CategoryServiceV2 {
     public CategoryEntity findById(Long id) {
         return categoryRepository.findById(id)
                 .orElseThrow(() ->
-                        new NotFoundException("Categoria com id: " + id + " não encontrads!"));    }
+                        new NotFoundException("Categoria com id: '" + id + "' não encontrado!"));
+    }
 
-    public Optional<CategoryEntity> update(CategoryEntity categoryEntity) {
-        return Optional.ofNullable(categoryRepository.findById(categoryEntity.getCategoryId())
+    public Optional<CategoryEntity> update(Long id, CategoryEntity categoryEntity) {
+        return Optional.ofNullable(categoryRepository.findById(id)
                 .map(categoryEntity1 -> {
                     categoryEntity1.setCategoryName(categoryEntity.getCategoryName());
                     return categoryRepository.save(categoryEntity1);
                 })
                 .orElseThrow(() ->
-                        new NotFoundException("Categoria " + categoryEntity.getCategoryName() + " não encontrads!")));
+                        new NotFoundException("Categoria com id: '" + id + "' não encontrado!")));
     }
-
-
 
     public void delete(Long id) {
         categoryRepository.deleteById(id);

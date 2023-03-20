@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
-//    @Query("SELECT t FROM CategoryEntity t WHERE t.categoryName LIKE %?1%")
+    @Query("SELECT t FROM CategoryEntity t WHERE t.categoryName LIKE %?1%")
     CategoryEntity findAllByCategoryNameContains(String categoryName);
 
 }
