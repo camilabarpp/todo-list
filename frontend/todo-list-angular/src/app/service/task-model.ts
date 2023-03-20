@@ -1,7 +1,13 @@
 export interface TaskModel {
-  id: number;
-  name: string;
+  taskId: number;
+  taskTitle: string;
   description: string;
   completed: boolean;
-  weekDay: string;
+  dueDate: Date;
+  category: Category;
+}
+
+export interface Category {
+  categoryId: number;
+  categoryName: string;
 }

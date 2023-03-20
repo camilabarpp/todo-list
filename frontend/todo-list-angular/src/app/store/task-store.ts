@@ -50,22 +50,11 @@ export class TaskStore extends ComponentStore<TaskState> {
     ),
   );
 
-  // readonly getTaskById = this.effect<{ id: number}>((payload$) =>
-  //   payload$.pipe(
-  //     switchMap(({id}) => this._taskService.getTaskById(id)),
-  //     tap((updatedTask) =>
-  //       this.patchState((state) => ({
-  //         tasks: state.tasks?.map((task) => (task.id === updatedTask.id ? updatedTask : task)),
-  //       })),
-  //     ),
-  //   ),
-  // );
-
   readonly getTaskById = this.effect<any>((id$: Observable<any>) =>
     id$.pipe(
       switchMap((id) => this._taskService.getTaskById(id)),
       tap((task) => {
-        this.patchState({selectedTaskId: task.id});
+        this.patchState({selectedTaskId: task.taskId});
         console.log(task);
       })
     )
@@ -87,7 +76,7 @@ export class TaskStore extends ComponentStore<TaskState> {
       switchMap(({id, task}) => this._taskService.updateTask(id, task)),
       tap((updatedTask) =>
         this.patchState((state) => ({
-          tasks: state.tasks?.map((task) => (task.id === updatedTask.id ? updatedTask : task)),
+          tasks: state.tasks?.map((task) => (task.taskId === updatedTask.taskId ? updatedTask : task)),
         })),
       ),
     ),
@@ -101,7 +90,7 @@ export class TaskStore extends ComponentStore<TaskState> {
       }),
       tap((updatedTask) =>
         this.patchState((state) => ({
-          tasks: state.tasks!.map((task) => (task?.id === updatedTask?.id ? updatedTask : task)),
+          tasks: state.tasks!.map((task) => (task?.taskId === updatedTask?.taskId ? updatedTask : task)),
         })),
       ),
     ),
@@ -112,7 +101,7 @@ export class TaskStore extends ComponentStore<TaskState> {
       switchMap((id) => this._taskService.deleteTask(id)),
       tap((deletedId) =>
         this.patchState((state) => ({
-          tasks: state.tasks ? state.tasks.filter((task) => task.id !== deletedId) : []
+          tasks: state.tasks ? state.tasks.filter((task) => task.taskId !== deletedId) : []
         })),
       ),
     ),

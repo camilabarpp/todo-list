@@ -13,7 +13,7 @@ import {TaskService} from "../../service/task.service";
 export class TodoFormComponent implements OnInit {
 
   tasks$ = this.taskStore.tasks$;
-  taskId? : number;
+  taskId?: number;
 
   constructor(
     private taskStore: TaskStore,
@@ -27,52 +27,50 @@ export class TodoFormComponent implements OnInit {
   }
 
   form = this.fb.group({
-    id: 0,
-    name: ['', [Validators.required,
+    taskId: 0,
+    taskTitle: ['', [Validators.required,
       Validators.minLength(3),
       Validators.maxLength(15)]],
     description: [''],
-    weekDay: ['', [Validators.required]],
+    dueDate: [new Date(), [Validators.required]],
+    category: [{categoryId: 0, categoryName: ''}]
   });
 
   ngOnInit(): void {
-    const task = this.route.snapshot.data['task'];
-    console.log(task)
     const id: number = this.route.snapshot.params['id'];
     if (id) {
       this.service.getTaskById(id).subscribe(
         taskDetail => {
           this.taskStore.updateTask({id: id, task: taskDetail});
-          this.taskId = taskDetail.id;
+          this.taskId = taskDetail.taskId;
           console.log(this.taskId)
           this.form.setValue({
-              id: taskDetail.id,
-              name: taskDetail.name,
-              description: taskDetail.description,
-              weekDay: taskDetail.weekDay
-            },
-          );
+            dueDate: new Date(taskDetail.dueDate),
+            description: taskDetail.description,
+            taskTitle: taskDetail.taskTitle,
+            category: taskDetail.category,
+            taskId: taskDetail.taskId
+          });
         },
       )
     }
   }
+
   onSubmit() {
     if (this.form.valid) {
       const task: any = {
-        id: this.form.get('id')!.value,
-        name: this.form.get('name')!.value,
+        taskId: this.form.get('taskId')!.value,
+        taskTitle: this.form.get('taskTitle')!.value,
         description: this.form.get('description')?.value,
         completed: false, // Adicionado aqui
-        weekDay: this.form.get('weekDay')!.value,
+        dueDate: this.form.get('dueDate')!.value,
+        category: this.form.get('category')?.value
       }
 
-      if (this.form.value.id) {
-        this.taskStore.updateTask({task: task, id: task.id});
-        console.log(task.name)
-        console.log(task.id)
+      if (this.form.value.taskId) {
+        this.taskStore.updateTask({task: task, id: task.taskId});
       } else {
         this.taskStore.createTask(task);
-        console.log('criando')
       }
       this.onSuccess();
       this.onCancel();
@@ -80,6 +78,7 @@ export class TodoFormComponent implements OnInit {
       this.onError();
     }
   }
+
   getErrorMessage(fieldName: string) {
     const field = this.form?.get(fieldName);
 

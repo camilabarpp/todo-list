@@ -17,11 +17,12 @@ export class TaskResolver implements Resolve<TaskModel> {
       return this.service.getTaskById(route.params['id']);
     }
     return of({
-      id: 0,
-      name: '',
+      taskId: 0,
+      taskTitle: '',
       description: '',
       completed: false,
-      weekDay: ''
+      dueDate: new Date(),
+      category: {categoryId: 0, categoryName: ''},
     });
   }
 }

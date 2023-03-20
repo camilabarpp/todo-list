@@ -4,10 +4,10 @@
     <input
       matInput
       placeholder="Ler um livro"
-      formControlName="name"
+      formControlName="taskTitle"
       required #name>
     <mat-hint align="end">{{ name.value?.length || 0 }} / 15</mat-hint>
-    <mat-error *ngIf="form.invalid">{{getErrorMessage('name')}}</mat-error>
+    <mat-error *ngIf="form.invalid">{{getErrorMessage('taskTitle')}}</mat-error>
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Digite uma descrição</mat-label>
@@ -19,35 +19,51 @@
     </textarea>
   </mat-form-field>
   <mat-form-field appearance="outline">
-    <mat-error *ngIf="form.invalid">{{getErrorMessage('weekDay')}}</mat-error>
-    <mat-label>Dia da Semana:</mat-label>
-    <mat-select formControlName="weekDay">
-      <mat-option [value]="'Diariamente'">
-        Diariamente
-      </mat-option>
-      <mat-option [value]="'Segunda-feira'">
-        Segunda-feira
-      </mat-option>
-      <mat-option [value]="'Terça-feira'">
-        Terça-feira
-      </mat-option>
-      <mat-option [value]="'Quarta-feira'">
-        Quarta-feira
-      </mat-option>
-      <mat-option [value]="'Quinta-feira'">
-        Quinta-feira
-      </mat-option>
-      <mat-option [value]="'Sexta-feira'">
-        Sexta-feira
-      </mat-option>
-      <mat-option [value]="'Sábado'">
-        Sábado
-      </mat-option>
-      <mat-option [value]="'Domingo'">
-        Domingo
+    <mat-label>Data:</mat-label>
+    <mat-select formControlName="category">
+      <mat-option *ngFor="let task of tasks" [value]="'{{task.category.categoryName}}'">
+        {{task.category.categoryName | json}}
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-error *ngIf="form.invalid">{{getErrorMessage('dueDate')}}</mat-error>
+    <mat-label>Choose a date</mat-label>
+    <input formControlName="dueDate" matInput [matDatepicker]="picker">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+
+    <!--    <mat-label>Dia da Semana:</mat-label>-->
+    <!--    <mat-select formControlName="duedate">-->
+    <!--      <mat-option [value]="'Diariamente'">-->
+    <!--        Diariamente-->
+    <!--      </mat-option>-->
+    <!--      <mat-option [value]="'Segunda-feira'">-->
+    <!--        Segunda-feira-->
+    <!--      </mat-option>-->
+    <!--      <mat-option [value]="'Terça-feira'">-->
+    <!--        Terça-feira-->
+    <!--      </mat-option>-->
+    <!--      <mat-option [value]="'Quarta-feira'">-->
+    <!--        Quarta-feira-->
+    <!--      </mat-option>-->
+    <!--      <mat-option [value]="'Quinta-feira'">-->
+    <!--        Quinta-feira-->
+    <!--      </mat-option>-->
+    <!--      <mat-option [value]="'Sexta-feira'">-->
+    <!--        Sexta-feira-->
+    <!--      </mat-option>-->
+    <!--      <mat-option [value]="'Sábado'">-->
+    <!--        Sábado-->
+    <!--      </mat-option>-->
+    <!--      <mat-option [value]="'Domingo'">-->
+    <!--        Domingo-->
+    <!--      </mat-option>-->
+    <!--    </mat-select>-->
+  </mat-form-field>
+  <button mat-raised-button (click)="picker.open()">Open</button>
+
 
   <div class="button">
     <button class="button" (click)="onCancel()" mat-raised-button>Cancelar</button>

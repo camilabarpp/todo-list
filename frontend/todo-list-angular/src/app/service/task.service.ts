@@ -8,7 +8,7 @@ import {TaskModel} from "./task-model";
 })
 export class TaskService {
 
-  private readonly API = 'api/v1/tasks';
+  private readonly API = 'api/v2/tasks';
 
   constructor(private httpClient: HttpClient) {
   }

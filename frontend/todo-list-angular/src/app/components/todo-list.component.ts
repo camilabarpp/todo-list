@@ -39,7 +39,7 @@ export class TodoListComponent {
   }
 
   onSelected(selected : TaskModel) {
-    this.taskStore.updateTaskStatus({ id: selected.id, completed: !selected.completed });
+    this.taskStore.updateTaskStatus({ id: selected.taskId, completed: !selected.completed });
     this.refresh();
   }
 
@@ -58,7 +58,7 @@ export class TodoListComponent {
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        this.taskStore.deleteTask(course.id);
+        this.taskStore.deleteTask(course.taskId);
         this.snackBar.open('Curso removido com sucesso!', 'X', {
           duration: 5000,
           verticalPosition: 'bottom',
