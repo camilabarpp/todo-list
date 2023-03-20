@@ -1,6 +1,6 @@
 package camilabarpp.todolistjava.controller;
 
-import camilabarpp.todolistjava.model.TaskRequest;
+import camilabarpp.todolistjava.model.task.TaskRequest;
 import camilabarpp.todolistjava.repository.TaskRepository;
 import camilabarpp.todolistjava.stub.TaskStubs;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -64,7 +64,7 @@ class TaskControllerTest {
     @DisplayName("Should return a task by id")
     void shouldFindATaskByIdWithSuccess() throws Exception {
         var taskEntity = taskRepository.save(taskEntity());
-        var id = taskEntity.getId();
+        var id = taskEntity.getTaskId();
 
         MvcResult result = mvc.perform(get("/api/v1/tasks/{id}", id))
                 .andDo(print())
@@ -148,7 +148,7 @@ class TaskControllerTest {
     @DisplayName("Should update a task with Success")
     void update() throws Exception {
         var taskEntity = taskRepository.save(taskEntity());
-        var id = taskEntity.getId();
+        var id = taskEntity.getTaskId();
 
         MvcResult result = mvc.perform(put("/api/v1/tasks/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -185,7 +185,7 @@ class TaskControllerTest {
     @DisplayName("Should update completed")
     void updateCompleted() throws Exception {
         var taskEntity = taskRepository.save(taskEntity());
-        var id = taskEntity.getId();
+        var id = taskEntity.getTaskId();
 
         String request = mapper.writeValueAsString(TaskRequest.builder()
                 .completed(true)
@@ -207,7 +207,7 @@ class TaskControllerTest {
     @DisplayName("Should delete a task")
     void deleteTaskWithSuccess() throws Exception {
         var taskEntity = taskRepository.save(taskEntity());
-        var id = taskEntity.getId();
+        var id = taskEntity.getTaskId();
 
         MvcResult result = mvc.perform(delete("/api/v1/tasks/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)

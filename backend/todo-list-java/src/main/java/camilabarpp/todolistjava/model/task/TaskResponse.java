@@ -1,5 +1,6 @@
-package camilabarpp.todolistjava.model;
+package camilabarpp.todolistjava.model.task;
 
+import camilabarpp.todolistjava.model.category.CategoryEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,11 +11,10 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 public class TaskResponse {
-    private Long id;
-    private String name;
+    private Long taskId;
+    private String taskTitle;
     private String description;
-    private String category;
+    private CategoryEntity category;
     private LocalDate dueDate;
     private Boolean completed;
-    private String weekDay;
 }

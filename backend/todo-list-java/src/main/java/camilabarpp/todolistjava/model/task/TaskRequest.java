@@ -1,5 +1,6 @@
-package camilabarpp.todolistjava.model;
+package camilabarpp.todolistjava.model.task;
 
+import camilabarpp.todolistjava.model.category.CategoryEntity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -18,7 +19,7 @@ public class TaskRequest {
     @NotBlank(message = "Name is mandatory")
     @NotNull(message = "Name is mandatory")
     @NotEmpty(message = "Name is mandatory")
-    private String name;
+    private String taskTitle;
     private String description;
     private Boolean completed;
     @NotBlank(message = "Due date is mandatory")
@@ -26,9 +27,7 @@ public class TaskRequest {
     @NotNull(message = "Due date is mandatory")
     private LocalDate dueDate;
 
-    @NotBlank(message = "Week day is mandatory")
-    @NotNull(message = "Week day is mandatory")
-    private String weekDay;
+    private CategoryEntity category;
 
     public Boolean getCompleted() {
         return this.completed = false;

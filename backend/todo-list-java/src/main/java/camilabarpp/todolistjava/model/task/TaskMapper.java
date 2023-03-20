@@ -1,4 +1,4 @@
-package camilabarpp.todolistjava.model;
+package camilabarpp.todolistjava.model.task;
 
 import lombok.experimental.UtilityClass;
 
@@ -6,32 +6,32 @@ import lombok.experimental.UtilityClass;
 public class TaskMapper {
     public static TaskResponse entityToResponse(TaskEntity taskEntity) {
         return TaskResponse.builder()
-                .id(taskEntity.getId())
-                .name(taskEntity.getName())
+                .taskId(taskEntity.getTaskId())
+                .taskTitle(taskEntity.getTaskTitle())
                 .description(taskEntity.getDescription())
                 .completed(taskEntity.getCompleted())
                 .dueDate(taskEntity.getDueDate())
-                .weekDay(taskEntity.getWeekDay())
+                .category(taskEntity.getCategory())
                 .build();
     }
 
     public static TaskEntity requestToEntity(TaskRequest taskRequest) {
         return TaskEntity.builder()
-                .name(taskRequest.getName())
+                .taskTitle(taskRequest.getTaskTitle())
                 .description(taskRequest.getDescription())
                 .completed(taskRequest.getCompleted())
                 .dueDate(taskRequest.getDueDate())
-                .weekDay(taskRequest.getWeekDay())
+                .category(taskRequest.getCategory())
                 .build();
     }
 
     public static TaskEntity responseToEntity(TaskResponse taskResponse) {
         return TaskEntity.builder()
-                .name(taskResponse.getName())
+                .taskTitle(taskResponse.getTaskTitle())
                 .description(taskResponse.getDescription())
                 .completed(taskResponse.getCompleted())
                 .dueDate(taskResponse.getDueDate())
-                .weekDay(taskResponse.getWeekDay())
+                .category(taskResponse.getCategory())
                 .build();
     }
 }
