@@ -1,5 +1,8 @@
-package camilabarpp.todolistjava.model.task;
+package camilabarpp.todolistjava.model.task.mapper;
 
+import camilabarpp.todolistjava.model.task.entity.TaskEntity;
+import camilabarpp.todolistjava.model.task.request.TaskRequest;
+import camilabarpp.todolistjava.model.task.response.TaskResponse;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -22,6 +25,16 @@ public class TaskMapper {
                 .completed(taskRequest.getCompleted())
                 .dueDate(taskRequest.getDueDate())
                 .category(taskRequest.getCategory())
+                .build();
+    }
+
+    public static TaskRequest entityToRequest(TaskEntity taskEntity) {
+        return TaskRequest.builder()
+                .taskTitle(taskEntity.getTaskTitle())
+                .description(taskEntity.getDescription())
+                .completed(taskEntity.getCompleted())
+                .dueDate(taskEntity.getDueDate())
+                .category(taskEntity.getCategory())
                 .build();
     }
 

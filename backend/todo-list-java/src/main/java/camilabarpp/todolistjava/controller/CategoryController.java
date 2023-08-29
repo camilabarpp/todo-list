@@ -1,22 +1,26 @@
 package camilabarpp.todolistjava.controller;
 
+import camilabarpp.todolistjava.model.category.response.CategoryResponse;
 import camilabarpp.todolistjava.model.category.CategoryEntity;
-import camilabarpp.todolistjava.service.CategoryServiceV2;
+import camilabarpp.todolistjava.model.category.request.CategoryRequest;
+import camilabarpp.todolistjava.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+import static camilabarpp.todolistjava.model.category.mapper.CategoryMapper.toEntity;
+import static camilabarpp.todolistjava.model.category.mapper.CategoryMapper.toResponse;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
 @RequestMapping("/api/v2/categories")
 @RequiredArgsConstructor
-public class CategoryControllerV2 {
+public class CategoryController {
 
-    private final CategoryServiceV2 categoryServiceV2;
+    private final CategoryService categoryServiceV2;
 
     @GetMapping
     public List<CategoryEntity> findAll() {
@@ -29,8 +33,8 @@ public class CategoryControllerV2 {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public CategoryEntity save(@RequestBody CategoryEntity categoryEntity) {
-        return categoryServiceV2.save(categoryEntity);
+    public CategoryResponse save(@RequestBody CategoryRequest categoryEntity) {
+        return toResponse(categoryServiceV2.save(toEntity(categoryEntity)));
     }
 
     @PutMapping("/{id}")

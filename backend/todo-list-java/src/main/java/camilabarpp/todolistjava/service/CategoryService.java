@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryServiceV2 {
+public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
@@ -20,7 +20,13 @@ public class CategoryServiceV2 {
     }
 
     public CategoryEntity findByCategory(String categoryName) {
-        return categoryRepository.findAllByCategoryNameContains(categoryName);
+        var category = categoryRepository.findAllByCategoryNameContains(categoryName);
+
+        if (category == null) {
+            throw new NotFoundException("Categoria '" + categoryName + "' não encontrada!");
+        } else {
+            return category;
+        }
     }
 
     public CategoryEntity save(CategoryEntity categoryEntity) {

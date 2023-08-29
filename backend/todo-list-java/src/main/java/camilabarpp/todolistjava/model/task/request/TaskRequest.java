@@ -1,4 +1,4 @@
-package camilabarpp.todolistjava.model.task;
+package camilabarpp.todolistjava.model.task.request;
 
 import camilabarpp.todolistjava.model.category.CategoryEntity;
 import jakarta.validation.constraints.NotBlank;
@@ -30,6 +30,6 @@ public class TaskRequest {
     private CategoryEntity category;
 
     public Boolean getCompleted() {
-        return this.completed = false;
+        return this.completed != null && this.completed;
     }
 }

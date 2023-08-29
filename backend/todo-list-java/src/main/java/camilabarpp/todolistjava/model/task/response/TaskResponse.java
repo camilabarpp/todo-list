@@ -1,4 +1,4 @@
-package camilabarpp.todolistjava.model.task;
+package camilabarpp.todolistjava.model.task.response;
 
 import camilabarpp.todolistjava.model.category.CategoryEntity;
 import lombok.AllArgsConstructor;

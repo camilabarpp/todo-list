@@ -1,6 +1,6 @@
 package camilabarpp.todolistjava.controller;
 
-import camilabarpp.todolistjava.model.task.TaskRequest;
+import camilabarpp.todolistjava.model.task.request.TaskRequest;
 import camilabarpp.todolistjava.repository.TaskRepository;
 import camilabarpp.todolistjava.stub.TaskStubs;
 import com.fasterxml.jackson.databind.ObjectMapper;

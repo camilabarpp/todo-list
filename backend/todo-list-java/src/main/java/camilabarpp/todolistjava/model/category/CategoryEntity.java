@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "categoryV2")
+@Table(name = "categories")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,6 +17,6 @@ public class CategoryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryId;
 
-    @Column
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'Sem categoria'")
     private String categoryName;
 }

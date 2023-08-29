@@ -1,8 +1,8 @@
 package camilabarpp.todolistjava.stub;
 
-import camilabarpp.todolistjava.model.task.TaskEntity;
-import camilabarpp.todolistjava.model.task.TaskRequest;
-import camilabarpp.todolistjava.model.task.TaskResponse;
+import camilabarpp.todolistjava.model.task.entity.TaskEntity;
+import camilabarpp.todolistjava.model.task.request.TaskRequest;
+import camilabarpp.todolistjava.model.task.response.TaskResponse;
 
 public class TaskStubs {
 

@@ -1,4 +1,4 @@
-package camilabarpp.todolistjava.model.task;
+package camilabarpp.todolistjava.model.task.entity;
 
 import camilabarpp.todolistjava.model.category.CategoryEntity;
 import jakarta.persistence.*;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "tasksV2")
+@Table(name = "tasks")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

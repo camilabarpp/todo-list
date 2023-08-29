@@ -1,0 +1,74 @@
+
+section {
+  width: 100%;
+  min-height: 400px;
+
+  background: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+
+  margin-top: 20px;
+
+  border-radius: 10px;
+
+  &.loading {
+    background-image: url("/assets/img/Enteatask.png");
+    background-repeat: no-repeat;
+    background-position: center 30px;
+    background-size: 200px 300px;
+  }
+
+  ul {
+    min-height: 200px;
+    padding: 20px 20px 100px 20px;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      margin: 10px 0;
+      border-radius: 10px;
+      background-color: #ced4da;
+    }
+
+    li div:first-child {
+      display: flex;
+      align-items: center;
+    }
+
+    li div:last-child {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    padding-bottom: 30px;
+
+    .addButton {
+      background-color: black;
+
+      span {
+        color: white;
+      }
+      mat-icon {
+        color: white;
+      }
+    }
+  }
+  .completed-task {
+    text-decoration: line-through;
+  }
+
+}
+
+.mat-mdc-checkbox.mat-accent {
+  --mdc-checkbox-selected-icon-color: #ced4da;
+  --mdc-checkbox-selected-focus-icon-color: #ced4da;
+  --mdc-checkbox-selected-hover-icon-color: #ced4da;
+  --mdc-checkbox-selected-pressed-icon-color: #ced4da
+}

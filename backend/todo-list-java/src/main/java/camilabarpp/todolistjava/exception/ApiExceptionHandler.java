@@ -2,6 +2,7 @@ package camilabarpp.todolistjava.exception;
 
 import camilabarpp.todolistjava.exception.errorresponse.ErrorResponse;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,6 +19,17 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
 public class ApiExceptionHandler extends DefaultResponseErrorHandler {
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(INTERNAL_SERVER_ERROR)
+    public ErrorResponse httpMessageNotReadableException(HttpMessageNotReadableException e) {
+        return ErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .message(e.getMessage())
+                .field(INTERNAL_SERVER_ERROR.name())
+                .parameter(e.getClass().getSimpleName())
+                .build();
+    }
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(NOT_FOUND)

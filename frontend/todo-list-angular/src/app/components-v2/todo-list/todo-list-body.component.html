@@ -1,0 +1,35 @@
+<section [ngClass]="{'loading': !tasks.length}">
+  <ul *ngIf="tasks$ | async as tasks">
+    <li *ngFor="let task of tasks | sortCompleted"
+        [ngClass]="{ 'completed-task': task.completed}">
+      <div (click)="onSelected(task)">
+        <mat-checkbox
+          [checked]="task.completed"
+        ></mat-checkbox>
+        <span>{{task.taskTitle}}</span>
+      </div>
+      <div>
+        <button mat-icon-button aria-label="Remover Curso" (click)="onDelete(task)">
+          <mat-icon>delete</mat-icon>
+        </button>
+
+        <button mat-icon-button aria-label="Editar Curso" (click)="onEdit(task.taskId)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+    </li>
+  </ul>
+
+
+  <div class="button">
+    <button
+      mat-stroked-button
+      aria-label="Adicionar uma tarefa"
+      (click)="onAdd()"
+      class="addButton"
+    >
+      <span>Adicionar tarefa</span>
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</section>
