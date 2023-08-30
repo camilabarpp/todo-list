@@ -162,6 +162,35 @@ class TaskServiceTest {
     }
 
     @Test
+    @DisplayName("Deve retornar todas as tarefas pela data de termino")
+    void findByDueDate_WithSuccess() {
+        List<TaskResponse> taskExpected = List.of(taskResponse(), taskResponse());
+        var request = List.of(taskEntity(), taskEntity());
+
+        when(repository.findByDueDate(LocalDate.now())).thenReturn(request);
+
+        List<TaskResponse> response = service.findByDueDate(LocalDate.now());
+
+        assertEquals(2, response.size());
+        assertEquals(taskExpected, response);
+        verify(repository).findByDueDate(LocalDate.now());
+    }
+
+    @Test
+    @DisplayName("Deve retornar um array vazio quando não encontrar uma tarefa pela data de termino")
+    void findByDueDate_WhenNotFoundATaskDate() {
+        List<TaskResponse> taskExpected = List.of();
+
+        when(repository.findByDueDate(LocalDate.now())).thenReturn(List.of());
+
+        List<TaskResponse> response = service.findByDueDate(LocalDate.now());
+
+        assertEquals(0, response.size());
+        assertEquals(taskExpected, response);
+        verify(repository).findByDueDate(LocalDate.now());
+    }
+
+    @Test
     @DisplayName("Deve atualizar uma tarefa")
     void update_ShouldUpdatePersonSuccessfully() {
         Long id = 1L;
