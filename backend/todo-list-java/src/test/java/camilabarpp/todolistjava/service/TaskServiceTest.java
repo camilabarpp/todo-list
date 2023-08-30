@@ -17,7 +17,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static camilabarpp.todolistjava.model.task.mapper.TaskMapper.requestToEntity;
 import static camilabarpp.todolistjava.stub.CategoryStubs.createCategory;
 import static camilabarpp.todolistjava.stub.TaskStubs.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
