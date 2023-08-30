@@ -191,6 +191,42 @@ class TaskServiceTest {
     }
 
     @Test
+    @DisplayName("Deve retornar todas as tarefas da semana atual")
+    void findByCurrentWeek_WithSuccess() {
+        LocalDate currentDate = LocalDate.now();
+        LocalDate endOfWeek = currentDate.plusDays(6);
+        List<TaskResponse> taskExpected = List.of(taskResponse(), taskResponse());
+        var request = List.of(taskEntity(), taskEntity());
+
+        when(repository.findByDueDateBetween(currentDate, endOfWeek)).thenReturn(request);
+
+        List<TaskResponse> response = service.findByCurrentWeek();
+
+        assertEquals(2, response.size());
+        assertEquals(taskExpected, response);
+        verify(repository).findByDueDateBetween(LocalDate.now(), LocalDate.now().plusDays(6));
+    }
+
+    @Test
+    @DisplayName("Deve retornar todas as tarefas do mês atual")
+    void findByCurrentMonth_WithSuccess() {
+        LocalDate currentDate = LocalDate.now();
+        int daysInMonth = currentDate.lengthOfMonth();
+        int remainingDays = daysInMonth - currentDate.getDayOfMonth();
+        LocalDate endOfMonth = currentDate.plusDays(remainingDays);
+        List<TaskResponse> taskExpected = List.of(taskResponse(), taskResponse());
+        var request = List.of(taskEntity(), taskEntity());
+
+        when(repository.findByDueDateBetween(currentDate, endOfMonth)).thenReturn(request);
+
+        List<TaskResponse> response = service.findByCurrentMonth();
+
+        assertEquals(2, response.size());
+        assertEquals(taskExpected, response);
+        verify(repository).findByDueDateBetween(currentDate, endOfMonth);
+    }
+
+    @Test
     @DisplayName("Deve atualizar uma tarefa")
     void update_ShouldUpdatePersonSuccessfully() {
         Long id = 1L;
