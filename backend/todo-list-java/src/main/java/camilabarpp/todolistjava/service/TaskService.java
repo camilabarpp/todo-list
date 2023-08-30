@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static camilabarpp.todolistjava.model.task.mapper.TaskMapper.entityToResponse;
@@ -85,14 +84,6 @@ public class TaskService {
                 .collect(Collectors.toList());
     }
 
-//    public TaskResponse save(TaskRequest taskRequest) {
-//        Optional<CategoryEntity> categoryOptional = Optional.ofNullable(categoryService.findByCategory(taskRequest.getCategory().getCategoryName()));
-//        CategoryEntity category = categoryOptional.orElse(categoryService.findById(28L));
-//        taskRequest.setCategory(category);
-//        categoryService.save(category);
-//        return entityToResponse(taskRepository.save(requestToEntity(taskRequest)));
-//    }
-
     public TaskEntity save(TaskEntity taskEntity) {
         var category = taskEntity.getCategory();
         CategoryEntity categoryEntity;
@@ -133,7 +124,7 @@ public class TaskService {
         taskRepository.deleteAllById(ids);
     }
 
-    public void delete(Long id) {
+    public void deleteByID(Long id) {
         taskRepository.deleteById(id);
     }
 }

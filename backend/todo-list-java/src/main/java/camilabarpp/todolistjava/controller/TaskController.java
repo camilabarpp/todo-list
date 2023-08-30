@@ -52,7 +52,7 @@ public class TaskController {
     @DeleteMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
     public void delete(@PathVariable Long id) {
-        taskService.delete(id);
+        taskService.deleteByID(id);
     }
 
     @DeleteMapping("/deleteAllByIds")

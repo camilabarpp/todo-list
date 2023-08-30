@@ -13,11 +13,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import static camilabarpp.todolistjava.model.task.mapper.TaskMapper.requestToEntity;
-import static camilabarpp.todolistjava.model.task.mapper.TaskMapper.responseToEntity;
+import static camilabarpp.todolistjava.stub.CategoryStubs.createCategory;
 import static camilabarpp.todolistjava.stub.TaskStubs.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -31,6 +32,10 @@ class TaskServiceTest {
 
     @Mock
     private TaskRepository repository;
+
+    @Mock
+    private CategoryService categoryService;
+
 
     @Test
     @DisplayName("Deve mostrar todas as tarefas")
@@ -105,24 +110,57 @@ class TaskServiceTest {
 
     @Test
     @DisplayName("Deve salvar uma tarefa")
-    void create_validRequest_shouldCreatePerson() {
-        TaskRequest personRequest = new TaskRequest();
+    void save_validRequest_shouldCreatePerson() {
+        TaskEntity taskEntity = new TaskEntity();
 
-        when(repository.save(requestToEntity(personRequest))).thenReturn(requestToEntity(personRequest));
+        when(repository.save(taskEntity)).thenReturn(taskEntity);
 
-        TaskResponse personResponse = service.save(personRequest);
+        var save = service.save(taskEntity);
 
-        verify(repository).save(requestToEntity(personRequest));
-        assertEquals(requestToEntity(personRequest), responseToEntity(personResponse));
+        verify(repository).save(taskEntity);
+        assertEquals(taskEntity, save);
     }
 
+    @Test
+    @DisplayName("Deve salvar uma tarefa com categoria")
+    void save_validRequestWithCategory_shouldCreatePerson() {
+        TaskEntity taskEntity = new TaskEntity();
+        taskEntity.setCategory(createCategory());
+
+        when(repository.save(taskEntity)).thenReturn(taskEntity);
+
+        var save = service.save(taskEntity);
+
+        verify(repository).save(taskEntity);
+        assertEquals(taskEntity, save);
+    }
+
+    @Test
+    @DisplayName("Deve salvar uma tarefa com a categoria default")
+    void save_validRequestWithDefaultCategory_shouldCreatePerson() {
+        TaskEntity taskEntity = new TaskEntity();
+        taskEntity.setCategory(null);
+
+        when(repository.save(taskEntity)).thenReturn(taskEntity);
+        when(categoryService.findByCategory("Sem categoria")).thenReturn(createCategory());
+
+        var save = service.save(taskEntity);
+
+        verify(repository).save(taskEntity);
+        assertEquals(taskEntity, save);
+    }
 
     @Test
     @DisplayName("Deve lançar NullPointerException quanto estiver faltando dados para salvar uma tarefa")
     void save_ShouldThrowNullPointerException() {
-        TaskRequest request = invalidTaskRequest();
+        TaskEntity request = TaskEntity
+                .builder()
+                .description("description")
+                .completed(true)
+                .dueDate(LocalDate.now())
+                .build();
 
-        when(repository.findById(anyLong())).thenReturn(Optional.empty());
+        when(repository.save(request)).thenThrow(NullPointerException.class);
 
         assertThrows(NullPointerException.class, () -> service.save(request));
     }
@@ -130,9 +168,9 @@ class TaskServiceTest {
     @Test
     @DisplayName("Deve lançar ConstraintViolationException quanto estiver faltando dados para salvar uma tarefa")
     void save_ShouldThrowConstraintViolationException() {
-        TaskRequest request = invalidTaskRequest();
+        TaskEntity request = invalidTaskEntity();
 
-        when(repository.save(requestToEntity(request))).thenThrow(ConstraintViolationException.class);
+        when(repository.save(request)).thenThrow(ConstraintViolationException.class);
 
         assertThrows(ConstraintViolationException.class, () -> service.save(request));
     }
@@ -148,17 +186,21 @@ class TaskServiceTest {
 
         doNothing().when(repository).deleteById(id);
 
-        service.deleteTask(id);
+        service.deleteByID(id);
         verify(repository, times(1)).deleteById(id);
+        assertEquals(0, repository.findAll().size());
     }
-
 
     @Test
     @DisplayName("Deve deletar todas as tarefas")
     void deleteAll_WithSuccess() {
+        when(repository.save(any(TaskEntity.class))).thenReturn(any(TaskEntity.class));
+        when(repository.findById(1L)).thenReturn(Optional.of(taskEntity()));
+        when(repository.findById(2L)).thenReturn(Optional.of(taskEntity()));
 
-        service.deleteAllTasks();
+        service.deleteAllById(List.of(1L, 2L));
 
-        verify(repository).deleteAll();
+        verify(repository).deleteAllById(List.of(1L, 2L));
+        assertEquals(0, repository.findAll().size());
     }
 }

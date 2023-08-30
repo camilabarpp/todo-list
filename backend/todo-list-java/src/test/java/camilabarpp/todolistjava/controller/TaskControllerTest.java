@@ -115,7 +115,7 @@ class TaskControllerTest {
     void shouldThrowsMethodArgumentNotValidException_WhenTrySaveAInvalidTask() throws Exception {
         MvcResult result = mvc.perform(post("/api/v1/tasks")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(TaskStubs.invalidTaskRequest())))
+                        .content(mapper.writeValueAsString(TaskStubs.invalidTaskEntity())))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andReturn();

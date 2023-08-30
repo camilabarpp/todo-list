@@ -4,6 +4,8 @@ import camilabarpp.todolistjava.model.task.entity.TaskEntity;
 import camilabarpp.todolistjava.model.task.request.TaskRequest;
 import camilabarpp.todolistjava.model.task.response.TaskResponse;
 
+import java.time.LocalDate;
+
 public class TaskStubs {
 
     static final String invalidName;
@@ -21,11 +23,11 @@ public class TaskStubs {
 
     public static TaskEntity taskEntity() {
         return TaskEntity.builder()
-                .id(1L)
-                .name("Pagar a luz")
+                .taskId(1L)
+                .taskTitle("Pagar a luz")
                 .description("Entrar no site e gerar o boleto")
                 .completed(false)
-                .weekDay("Quarta-feira")
+                .dueDate(LocalDate.of(2021, 10, 20))
                 .build();
     }
 
@@ -35,7 +37,7 @@ public class TaskStubs {
                 .taskTitle("Pagar a luz")
                 .description("Entrar no site e gerar o boleto")
                 .completed(false)
-                .weekDay("Quarta-feira")
+                .dueDate(LocalDate.of(2021, 10, 20))
                 .build();
     }
 
@@ -44,16 +46,16 @@ public class TaskStubs {
                 .taskTitle("Pagar a luz")
                 .description("Entrar no site e gerar o boleto")
                 .completed(false)
-                .weekDay("Quarta-feira")
+                .dueDate(LocalDate.of(2021, 10, 20))
                 .build();
     }
 
-    public static TaskRequest invalidTaskRequest() {
-        return TaskRequest.builder()
+    public static TaskEntity invalidTaskEntity() {
+        return TaskEntity.builder()
                 .taskTitle("")
                 .description("")
                 .completed(null)
-                .weekDay("")
+                .dueDate(null)
                 .build();
     }
 
@@ -62,7 +64,7 @@ public class TaskStubs {
                 .taskTitle(invalidName)
                 .description("Entrar no site e gerar o boleto")
                 .completed(false)
-                .weekDay("Quarta-feira")
+                .dueDate(LocalDate.of(2021, 10, 20))
                 .build();
     }
 }
