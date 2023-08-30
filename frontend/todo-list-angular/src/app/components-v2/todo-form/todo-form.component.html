@@ -6,7 +6,7 @@
       placeholder="Ler um livro"
       formControlName="taskTitle"
       required #name>
-    <mat-hint align="end">{{ name.value?.length || 0 }} / 15</mat-hint>
+    <mat-hint align="end">{{ name.value.length || 0 }} / 15</mat-hint>
     <mat-error *ngIf="form.invalid">{{getErrorMessage('taskTitle')}}</mat-error>
   </mat-form-field>
   <mat-form-field appearance="outline">
@@ -18,14 +18,14 @@
       formControlName="description">
     </textarea>
   </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>Data:</mat-label>
-    <mat-select formControlName="category">
-      <mat-option *ngFor="let task of tasks" [value]="'{{task.category.categoryName}}'">
-        {{task.category.categoryName | json}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+<!--  <mat-form-field appearance="outline">-->
+<!--    <mat-label>Data:</mat-label>-->
+<!--    <mat-select formControlName="category">-->
+<!--      <mat-option *ngFor="let task of tasks" [value]="'{{task.category.categoryName}}'">-->
+<!--        {{task.category.categoryName | json}}-->
+<!--      </mat-option>-->
+<!--    </mat-select>-->
+<!--  </mat-form-field>-->
   <mat-form-field appearance="outline">
     <mat-error *ngIf="form.invalid">{{getErrorMessage('dueDate')}}</mat-error>
     <mat-label>Choose a date</mat-label>

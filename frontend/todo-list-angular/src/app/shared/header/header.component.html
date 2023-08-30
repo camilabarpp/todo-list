@@ -1,3 +1,28 @@
+<!--TODO: MODIFICAÇÕES FEITAS AQUI -->
 <mat-toolbar>
-  <h1>To-Do List Angular + Spring</h1>
+    <button
+      [matMenuTriggerFor]="menu"
+    >
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>dialpad</mat-icon>
+        <span>Minha conta</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>person_pin</mat-icon>
+        <span>Meus espaços</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Sair</span>
+      </button>
+    </mat-menu>
+    <button
+      class="sm:hidden block text-black mt-12 drop-shadow-none"
+      (click)="toggleSideNav()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button
+    >
 </mat-toolbar>

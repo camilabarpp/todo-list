@@ -33,7 +33,7 @@ export class TodoFormComponent implements OnInit {
       Validators.maxLength(15)]],
     description: [''],
     dueDate: [new Date(), [Validators.required]],
-    category: [{categoryId: 0, categoryName: ''}]
+    // category: [{categoryId: 0, categoryName: ''}]
   });
 
   ngOnInit(): void {
@@ -48,7 +48,7 @@ export class TodoFormComponent implements OnInit {
             dueDate: new Date(taskDetail.dueDate),
             description: taskDetail.description,
             taskTitle: taskDetail.taskTitle,
-            category: taskDetail.category,
+            // category: taskDetail.category,
             taskId: taskDetail.taskId
           });
         },
@@ -64,7 +64,7 @@ export class TodoFormComponent implements OnInit {
         description: this.form.get('description')?.value,
         completed: false, // Adicionado aqui
         dueDate: this.form.get('dueDate')!.value,
-        category: this.form.get('category')?.value
+        // category: this.form.get('category')?.value
       }
 
       if (this.form.value.taskId) {

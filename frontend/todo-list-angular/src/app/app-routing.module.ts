@@ -5,7 +5,7 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'task' },
   {
     path: 'task',
-    loadChildren: () => import('./components/todo-list.module').then(m => m.TodoListModule)
+    loadChildren: () => import('./components-v2/todo-list.module').then(m => m.TodoListModule)
   }
 ];
 

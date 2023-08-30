@@ -1,4 +1,6 @@
 <div class="container container-section">
-  <app-header></app-header>
+  <app-header
+    (toggledSideNav)="toggleSideNav()"
+  ></app-header>
   <router-outlet></router-outlet>
 </div>
