@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -70,5 +71,48 @@ class CategoryServiceTest {
         CategoryEntity result = service.save(category);
 
         assertEquals(category, result);
+    }
+
+    @Test
+    @DisplayName("Deve encontrar uma categoria pelo id")
+    void findById_shouldFindCategoryById() {
+        CategoryEntity category = new CategoryEntity(1L, "Estudos");
+
+        when(repository.findById(1L)).thenReturn(Optional.of(category));
+
+        CategoryEntity result = service.findById(1L);
+
+        assertEquals(category, result);
+    }
+
+    @Test
+    @DisplayName("Deve lançar NotFoundException quando não encontrar a categoria pelo id")
+    void findById_shouldThrowNotFoundException() {
+        when(repository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> service.findById(1L));
+    }
+
+    @Test
+    @DisplayName("Deve atualizar uma categoria")
+    void update_shouldUpdateCategory() {
+        CategoryEntity category = new CategoryEntity(1L, "Estudos");
+
+        when(repository.findById(1L)).thenReturn(Optional.of(category));
+        when(repository.save(category)).thenReturn(category);
+
+        Optional<CategoryEntity> result = service.update(1L, category);
+
+        assertEquals(category, result.get());
+    }
+
+    @Test
+    @DisplayName("Deve lançar NotFoundException quando não encontrar a categoria pelo id para atualizar")
+    void update_shouldThrowNotFoundException() {
+        CategoryEntity category = new CategoryEntity(1L, "Estudos");
+
+        when(repository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> service.update(1L, category));
     }
 }
