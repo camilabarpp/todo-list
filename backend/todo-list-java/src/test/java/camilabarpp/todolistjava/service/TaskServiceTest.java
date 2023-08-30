@@ -133,6 +133,35 @@ class TaskServiceTest {
     }
 
     @Test
+    @DisplayName("Deve mostrar todas as tarefas por um periodo de data")
+    void findByDueDateBetween_WithSuccess() {
+        List<TaskResponse> taskExpected = List.of(taskResponse(), taskResponse());
+        var request = List.of(taskEntity(), taskEntity());
+
+        when(repository.findByDueDateBetween(LocalDate.now(), LocalDate.now())).thenReturn(request);
+
+        List<TaskResponse> response = service.findByDueDateBetween(LocalDate.now(), LocalDate.now());
+
+        assertEquals(2, response.size());
+        assertEquals(taskExpected, response);
+        verify(repository).findByDueDateBetween(LocalDate.now(), LocalDate.now());
+    }
+
+    @Test
+    @DisplayName("Deve retornar um array vazio quando não encontrar uma tarefa por um periodo de data")
+    void findByDueDateBetween_WhenNotFoundATaskDate() {
+        List<TaskResponse> taskExpected = List.of();
+
+        when(repository.findByDueDateBetween(LocalDate.now(), LocalDate.now())).thenReturn(List.of());
+
+        List<TaskResponse> response = service.findByDueDateBetween(LocalDate.now(), LocalDate.now());
+
+        assertEquals(0, response.size());
+        assertEquals(taskExpected, response);
+        verify(repository).findByDueDateBetween(LocalDate.now(), LocalDate.now());
+    }
+
+    @Test
     @DisplayName("Deve atualizar uma tarefa")
     void update_ShouldUpdatePersonSuccessfully() {
         Long id = 1L;
