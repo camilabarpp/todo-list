@@ -78,6 +78,32 @@ class TaskServiceTest {
     }
 
     @Test
+    @DisplayName("Deve mostrar todas as tarefas por categoria")
+    void findAllByCategoryName_WithSuccess() {
+        List<TaskEntity> taskExpected = List.of(taskEntity(), taskEntity());
+        var request = List.of(taskEntity(), taskEntity());
+
+        when(repository.findAllByCategoryName("category")).thenReturn(request);
+
+        List<TaskEntity> response = service.findAllByCategoryName("category");
+
+        assertEquals(2, response.size());
+        assertEquals(taskExpected, response);
+        verify(repository).findAllByCategoryName("category");
+    }
+
+    @Test
+    @DisplayName("Deve lançar NotFoundException quando não encontrar uma categoria")
+    void findAllByCategoryName_ShouldThrowNotFoundException() {
+        var taskEntity = new TaskEntity();
+        when(repository.findAllByCategoryName("category")).thenReturn(List.of());
+
+        assertThrows(NotFoundException.class, () -> service.findAllByCategoryName("category"));
+
+        verify(repository, never()).save(taskEntity);
+    }
+
+    @Test
     @DisplayName("Deve atualizar uma tarefa")
     void update_ShouldUpdatePersonSuccessfully() {
         Long id = 1L;
