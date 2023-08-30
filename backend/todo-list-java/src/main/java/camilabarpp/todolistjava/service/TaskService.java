@@ -32,7 +32,7 @@ public class TaskService {
         return taskRepository.findAll()
                 .stream()
                 .map(TaskMapper::entityToResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<TaskEntity> findAllByCategoryName(String categoryName) {
@@ -47,21 +47,21 @@ public class TaskService {
         return taskRepository.findAllByTaskTitleContaining(taskTitle)
                 .stream()
                 .map(TaskMapper::entityToResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<TaskResponse> findByDueDateBetween(LocalDate start, LocalDate end) {
         return taskRepository.findByDueDateBetween(start, end)
                 .stream()
                 .map(TaskMapper::entityToResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<TaskResponse> findByDueDate(LocalDate date) {
         return taskRepository.findByDueDate(date)
                 .stream()
                 .map(TaskMapper::entityToResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<TaskResponse> findByCurrentWeek() {
@@ -70,7 +70,7 @@ public class TaskService {
         return taskRepository.findByDueDateBetween(currentDate, endOfWeek)
                 .stream()
                 .map(TaskMapper::entityToResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<TaskResponse> findByCurrentMonth() {
@@ -81,7 +81,7 @@ public class TaskService {
         return taskRepository.findByDueDateBetween(currentDate, endOfMonth)
                 .stream()
                 .map(TaskMapper::entityToResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public TaskEntity save(TaskEntity taskEntity) {

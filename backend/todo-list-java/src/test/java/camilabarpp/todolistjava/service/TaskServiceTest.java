@@ -104,6 +104,35 @@ class TaskServiceTest {
     }
 
     @Test
+    @DisplayName("Deve mostrar todas as tarefas por titulo")
+    void findByTaskTitle_WithSuccess() {
+        List<TaskResponse> taskExpected = List.of(taskResponse(), taskResponse());
+        var request = List.of(taskEntity(), taskEntity());
+
+        when(repository.findAllByTaskTitleContaining("title")).thenReturn(request);
+
+        List<TaskResponse> response = service.findByTaskTitle("title");
+
+        assertEquals(2, response.size());
+        assertEquals(taskExpected, response);
+        verify(repository).findAllByTaskTitleContaining("title");
+    }
+
+    @Test
+    @DisplayName("Deve retornar um array vazio quando não encontrar uma tarefa por titulo")
+    void findByTaskTitle_WhenNotFoundATaskTitle() {
+        List<TaskResponse> taskExpected = List.of();
+
+        when(repository.findAllByTaskTitleContaining("title")).thenReturn(List.of());
+
+        List<TaskResponse> response = service.findByTaskTitle("title");
+
+        assertEquals(0, response.size());
+        assertEquals(taskExpected, response);
+        verify(repository).findAllByTaskTitleContaining("title");
+    }
+
+    @Test
     @DisplayName("Deve atualizar uma tarefa")
     void update_ShouldUpdatePersonSuccessfully() {
         Long id = 1L;
