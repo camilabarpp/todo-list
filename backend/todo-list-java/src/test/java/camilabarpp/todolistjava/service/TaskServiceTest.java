@@ -228,20 +228,35 @@ class TaskServiceTest {
 
     @Test
     @DisplayName("Deve atualizar uma tarefa")
-    void update_ShouldUpdatePersonSuccessfully() {
+    void update_WithSuccess() {
         Long id = 1L;
+        TaskEntity taskEntity = taskEntity();
         TaskRequest taskRequest = taskRequest();
-        TaskResponse taskResponse = taskResponse();
+
+        when(repository.findById(id)).thenReturn(Optional.of(taskEntity));
+        when(repository.save(taskEntity)).thenReturn(taskEntity);
+
+        TaskResponse result = service.update(id, taskRequest);
+
+        verify(repository).findById(id);
+        verify(repository).save(taskEntity);
+        assertEquals(taskResponse(), result);
+    }
+
+    @Test
+    @DisplayName("Deve atualizar o status de uma tarefa")
+    void updateCompleted_ShouldUpdateCompletedSuccessfully() {
+        Long id = 1L;
         TaskEntity taskEntity = taskEntity();
 
         when(repository.findById(id)).thenReturn(Optional.of(taskEntity));
         when(repository.save(taskEntity)).thenReturn(taskEntity);
 
-        TaskResponse actualPersonResponse = service.update(id, taskRequest);
+        service.updateCompleted(id, true);
 
-        assertEquals(taskResponse, actualPersonResponse);
         verify(repository).findById(id);
         verify(repository).save(taskEntity);
+        assertEquals(true, taskEntity.getCompleted());
     }
 
     @Test
