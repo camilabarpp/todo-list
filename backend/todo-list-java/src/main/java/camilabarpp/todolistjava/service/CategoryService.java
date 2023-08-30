@@ -49,7 +49,7 @@ public class CategoryService {
                         new NotFoundException("Categoria com id: '" + id + "' não encontrado!")));
     }
 
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         categoryRepository.deleteById(id);
     }
 

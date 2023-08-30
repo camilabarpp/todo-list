@@ -115,4 +115,28 @@ class CategoryServiceTest {
 
         assertThrows(NotFoundException.class, () -> service.update(1L, category));
     }
+
+    @Test
+    @DisplayName("Deve deletar uma categoria pelo id")
+    void deleteById_shouldDeleteCategoryById() {
+        CategoryEntity category = new CategoryEntity(1L, "Estudos");
+
+        when(repository.save(category)).thenReturn(category);
+        when(repository.findById(1L)).thenReturn(Optional.of(category));
+
+        service.deleteById(1L);
+
+        verify(repository, times(1)).deleteById(1L);
+        assertEquals(0, repository.findAll().size());
+    }
+
+    @Test
+    @DisplayName("Deve deletar todas as categorias")
+    void deleteAll_shouldDeleteAllCategories() {
+        doNothing().when(repository).deleteAll();
+
+        service.deleteAll();
+
+        verify(repository, times(1)).deleteAll();
+    }
 }
